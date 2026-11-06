@@ -7,21 +7,47 @@
   <meta name="description" content="A five-level guitar course from your first chord to playing like a pro: 40 lessons, practice plans and clear goals for every level.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,700&family=Outfit:wght@400;520;650&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <meta name="theme-color" content="#0E1014">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 30c-3-3.5-11-12-11-19C5 5.5 10 3 16 3s11 2.5 11 8c0 7-8 15.5-11 19z' fill='%23C9A96E'/%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,560;0,9..144,700;1,9..144,560&family=Outfit:wght@400;520;650&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
   <style>
-    .level-nav { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.4rem 0 0; }
-    .level-nav a {
-      display: inline-flex; gap: .45rem; align-items: center;
-      padding: .5rem .9rem; border-radius: 999px; text-decoration: none;
-      background: var(--surface); border: 1px solid var(--border); color: var(--text); font-weight: 520;
-    }
-    .level-nav a:hover { border-color: var(--accent); }
-    .level-nav b { color: var(--accent); font-weight: 650; }
+    html { scroll-padding-top: 9rem; }
+    .course-hero .hero-grid { grid-template-columns: 1.3fr .7fr; }
+    .course-hero .pat-stage { width: min(330px, 100%); }
+    .course-hero .bubble { left: -14%; top: 12%; }
 
-    .level { scroll-margin-top: 5rem; }
-    .level-head { display: grid; grid-template-columns: 1fr auto; gap: 1rem 2rem; align-items: end; }
-    .level-meta { display: flex; flex-wrap: wrap; gap: .5rem; margin: .4rem 0 0; padding: 0; list-style: none; }
+    /* Sticky level bar */
+    .level-bar {
+      position: sticky; top: 4.5rem; z-index: 20;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .level-nav { display: flex; gap: .5rem; padding: .7rem 0; overflow-x: auto; scrollbar-width: none; }
+    .level-nav::-webkit-scrollbar { display: none; }
+    .level-nav a {
+      display: inline-flex; gap: .5rem; align-items: center; white-space: nowrap;
+      padding: .45rem .95rem .45rem .5rem; border-radius: 999px; text-decoration: none;
+      background: var(--surface); border: 1px solid var(--border); color: var(--muted); font-weight: 520; font-size: .93rem;
+    }
+    .level-nav a:hover, .level-nav a.on { border-color: var(--accent); color: var(--text); }
+    .level-nav b {
+      width: 1.6rem; height: 1.6rem; border-radius: 50%; display: grid; place-items: center;
+      background: rgb(201 169 110 / .14); color: var(--accent); font-weight: 650; font-size: .85rem;
+    }
+    .level-nav a.on b { background: var(--accent); color: var(--on-accent); }
+
+    main { counter-reset: lv; }
+    .level { counter-increment: lv; }
+    .level-head { display: grid; grid-template-columns: auto 1fr auto; gap: 1rem 2rem; align-items: end; }
+    .level-head::before {
+      content: "0" counter(lv); align-self: start;
+      font-family: var(--font-display); font-weight: 700; font-size: clamp(4rem, 9vw, 7rem); line-height: .85;
+      color: transparent; -webkit-text-stroke: 1.5px var(--accent); opacity: .8;
+    }
+    .section-lede { color: var(--muted); font-size: 1.12rem; max-width: 38rem; margin: .8rem 0 0; }
+    .level-meta { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0 0; padding: 0; list-style: none; }
     .level-meta li {
       font-size: .85rem; color: var(--muted); background: var(--surface);
       border: 1px solid var(--border); border-radius: 999px; padding: .2rem .7rem;
@@ -44,8 +70,8 @@
     .lesson .num { font-family: var(--font-display); color: var(--accent); font-size: 1.05rem; }
     .lesson .name { font-weight: 650; }
     .lesson .name small { display: block; font-weight: 400; color: var(--muted); font-size: .9rem; }
-    .lesson .tick { color: var(--success); font-size: .85rem; visibility: hidden; }
-    .lesson.is-done .tick { visibility: visible; }
+    .lesson .tick { color: var(--success); font-size: .85rem; display: none; white-space: nowrap; }
+    .lesson.is-done .tick { display: inline; }
     .lesson-body { padding: 0 1.1rem 1.1rem 5.1rem; }
     .lesson-body h4 {
       font-family: var(--font-body); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
@@ -85,8 +111,29 @@
     table.plan td:first-child { color: var(--text); font-weight: 650; white-space: nowrap; }
     .table-wrap { overflow-x: auto; }
 
+    .lessons { margin-top: 2.2rem; }
+    .lesson summary { padding: 1.05rem 1.2rem; }
+    .lesson summary:hover .name { color: var(--accent); }
+    .lesson .name { font-size: 1.05rem; transition: color .15s; }
+    .lesson summary::after {
+      content: "+"; grid-column: 3; grid-row: 1; justify-self: end;
+      color: var(--accent); font-size: 1.4rem; line-height: 1; transition: transform .2s;
+    }
+    .lesson[open] summary::after { transform: rotate(45deg); }
+    .lesson .tick { grid-column: 3; grid-row: 1; margin-right: 1.8rem; }
+    .milestone h3 { font-size: 1.25rem; }
+
+    @media (max-width: 960px) {
+      .course-hero .hero-grid { grid-template-columns: 1fr; }
+      .course-hero .pat-stage { display: none; }
+    }
     @media (max-width: 860px) {
-      .level-head, .side-cards { grid-template-columns: 1fr; }
+      .level-head { grid-template-columns: 1fr; gap: .6rem; }
+      .level-head::before { font-size: 3.4rem; }
+      .lesson .tick { margin-right: 1.4rem; font-size: .78rem; }
+      .level-head .progress { grid-column: 1 / -1; }
+      .side-cards { grid-template-columns: 1fr; }
+      html { scroll-padding-top: 8.5rem; }
       .lesson-body { padding-left: 1.1rem; }
       .lesson summary { grid-template-columns: 2.6rem 1fr auto; }
     }
@@ -96,32 +143,50 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="logo" href="index.html">Murphy's <span>Guitar Lab</span></a>
+      <a class="logo" href="index.html" aria-label="Murphy's Guitar Lab home">
+        <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 30c-3-3.5-11-12-11-19C5 5.5 10 3 16 3s11 2.5 11 8c0 7-8 15.5-11 19z" fill="#C9A96E"/><path d="M12.5 8v12M16 8v15M19.5 8v12" stroke="#1A140C" stroke-width="1.3" stroke-linecap="round" opacity=".55"/></svg>
+        Murphy's <span>Guitar Lab</span>
+      </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav id="site-nav" class="site-nav" aria-label="Primary">
-        <a href="index.html">Home</a>
-        <a href="#levels">Levels</a>
+        <a href="lessons.html">Free lessons</a>
+        <a href="course.html" aria-current="page">Full course</a>
+        <a href="index.html#lessons-with-pat">Lessons with Pat</a>
         <a href="#plans">Practice plans</a>
-        <a class="btn btn-primary" href="murphy-guitar-lab.html">Open the lesson app</a>
+        <a class="btn btn-primary" href="lessons.html">Start free</a>
       </nav>
     </div>
   </header>
 
   <main id="main">
-    <section class="hero" id="top">
-      <div class="wrap">
-        <p class="eyebrow">The full course · 5 levels · 40 lessons</p>
-        <h1>From your first chord to finding your own sound.</h1>
-        <p class="lede">Each level has eight lessons, a practice plan and a checklist that tells you when you're ready to move on. Go at your own pace. Most players finish a level in two to six months.</p>
-        <nav class="level-nav" id="levels" aria-label="Levels">
-          <a href="#level-1"><b>1</b> Beginner</a>
-          <a href="#level-2"><b>2</b> Advanced beginner</a>
-          <a href="#level-3"><b>3</b> Intermediate</a>
-          <a href="#level-4"><b>4</b> Upper intermediate</a>
-          <a href="#level-5"><b>5</b> Advanced</a>
-        </nav>
+    <section class="hero course-hero strings" id="top">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">The full course · 5 levels · 40 lessons</p>
+          <h1>From your first chord to <em>your own sound.</em></h1>
+          <p class="lede">Each level has eight lessons, a practice plan and a checklist that tells you when you're ready to move on. Go at your own pace. Most players finish a level in two to six months.</p>
+          <ul class="hero-proof">
+            <li><strong>5</strong><span>levels</span></li>
+            <li><strong>40</strong><span>lessons</span></li>
+            <li><strong>Free</strong><span>no sign-up needed</span></li>
+          </ul>
+        </div>
+        <div class="pat-stage">
+          <p class="bubble">Tick each lesson as you go. I'll keep track!</p>
+          <img src="assets/img/pat-teach.jpg" width="604" height="900" alt="Pat, a cartoon guitarist in a teal cap, pointing at the neck of his guitar">
+        </div>
       </div>
     </section>
+
+    <div class="level-bar">
+      <nav class="wrap level-nav" id="levels" aria-label="Levels">
+        <a href="#level-1"><b>1</b> Beginner</a>
+        <a href="#level-2"><b>2</b> Advanced beginner</a>
+        <a href="#level-3"><b>3</b> Intermediate</a>
+        <a href="#level-4"><b>4</b> Upper intermediate</a>
+        <a href="#level-5"><b>5</b> Advanced</a>
+      </nav>
+    </div>
 
     <!-- ============ LEVEL 1 ============ -->
     <section class="section level" id="level-1" data-level="1">
@@ -134,7 +199,7 @@
             <ul class="level-meta">
               <li><strong>About 2 months</strong></li>
               <li><strong>10–15 min</strong> a day</li>
-              <li>Uses the <a class="app-link" href="murphy-guitar-lab.html" style="color:var(--accent)">lesson app</a></li>
+              <li>Uses the <a class="app-link" href="lessons.html" style="color:var(--accent)">lesson app</a></li>
             </ul>
           </div>
           <p class="progress" aria-live="polite"><strong data-count>0</strong> of 8 done</p>
@@ -154,7 +219,7 @@
               <ul><li>Tune up every day before you play. Say each string name out loud as you pluck it.</li></ul>
               <h4>You're ready when</h4>
               <ul><li>You can tune all six strings in under two minutes.</li></ul>
-              <p>In the app: <a class="app-link" href="murphy-guitar-lab.html">Lesson 1</a></p>
+              <p>In the app: <a class="app-link" href="lessons.html">Lesson 1</a></p>
               <label class="done-check"><input type="checkbox"> I can do this</label>
             </div>
           </details>
@@ -173,7 +238,7 @@
               <ul><li>One minute of slow down-strums on the open strings, keeping a relaxed wrist and an even volume.</li></ul>
               <h4>You're ready when</h4>
               <ul><li>You can strum for a minute without your shoulder tensing up or the pick slipping.</li></ul>
-              <p>In the app: <a class="app-link" href="murphy-guitar-lab.html">Lesson 2</a></p>
+              <p>In the app: <a class="app-link" href="lessons.html">Lesson 2</a></p>
               <label class="done-check"><input type="checkbox"> I can do this</label>
             </div>
           </details>
@@ -196,7 +261,7 @@ E|-0---------------|</pre>
               <ul><li>Play the line above slowly, then make up your own four-note line and write it in tab.</li></ul>
               <h4>You're ready when</h4>
               <ul><li>You can play any short tab without asking which string is which.</li></ul>
-              <p>In the app: <a class="app-link" href="murphy-guitar-lab.html">Lesson 3</a></p>
+              <p>In the app: <a class="app-link" href="lessons.html">Lesson 3</a></p>
               <label class="done-check"><input type="checkbox"> I can do this</label>
             </div>
           </details>
@@ -214,7 +279,7 @@ E|-0---------------|</pre>
               <ul><li>The one-minute challenge: count your clean Em → G switches in 60 seconds, write the number down and try to beat it tomorrow.</li></ul>
               <h4>You're ready when</h4>
               <ul><li>You can make 30 or more clean changes in a minute.</li></ul>
-              <p>In the app: <a class="app-link" href="murphy-guitar-lab.html">Lessons 4–5</a></p>
+              <p>In the app: <a class="app-link" href="lessons.html">Lessons 4–5</a></p>
               <label class="done-check"><input type="checkbox"> I can do this</label>
             </div>
           </details>
@@ -233,7 +298,7 @@ E|-0---------------|</pre>
               <ul><li>Em and G with the app's band, four beats per chord, at slow speed and then medium.</li></ul>
               <h4>You're ready when</h4>
               <ul><li>You can play the Em–G song all the way through without stopping, even if a change is messy.</li></ul>
-              <p>In the app: <a class="app-link" href="murphy-guitar-lab.html">Lessons 6–7</a></p>
+              <p>In the app: <a class="app-link" href="lessons.html">Lessons 6–7</a></p>
               <label class="done-check"><input type="checkbox"> I can do this</label>
             </div>
           </details>
@@ -251,7 +316,7 @@ E|-0---------------|</pre>
               <ul><li>Three minutes of the scale up and down with a metronome at 60, then make up short tunes over the backing track.</li></ul>
               <h4>You're ready when</h4>
               <ul><li>You can play the box up and down from memory with no wrong notes.</li></ul>
-              <p>In the app: <a class="app-link" href="murphy-guitar-lab.html">Lessons 8–10</a></p>
+              <p>In the app: <a class="app-link" href="lessons.html">Lessons 8–10</a></p>
               <label class="done-check"><input type="checkbox"> I can do this</label>
             </div>
           </details>
@@ -269,7 +334,7 @@ E|-0---------------|</pre>
               <ul><li>Do the one-minute challenge with a different pair each day.</li></ul>
               <h4>You're ready when</h4>
               <ul><li>You can play all nine chords from memory, with every string ringing clearly.</li></ul>
-              <p>In the app: <a class="app-link" href="murphy-guitar-lab.html">Lesson 11</a></p>
+              <p>In the app: <a class="app-link" href="lessons.html">Lesson 11</a></p>
               <label class="done-check"><input type="checkbox"> I can do this</label>
             </div>
           </details>
@@ -287,7 +352,7 @@ E|-0---------------|</pre>
               <ul><li>Two songs from the song list below, every day, from start to finish.</li></ul>
               <h4>You're ready when</h4>
               <ul><li>You can play three songs through at about 75 beats per minute without stopping.</li></ul>
-              <p>In the app: <a class="app-link" href="murphy-guitar-lab.html">Lesson 12 and the jam room</a></p>
+              <p>In the app: <a class="app-link" href="lessons.html">Lesson 12 and the jam room</a></p>
               <label class="done-check"><input type="checkbox"> I can do this</label>
             </div>
           </details>
@@ -1110,26 +1175,54 @@ A|-3-------3-------|</pre>
       </div>
     </section>
 
-    <section class="cta">
-      <div class="wrap narrow cta-inner">
-        <h2>Start at the beginning, or start where you are.</h2>
-        <p>New to guitar? Level 1 runs in the lesson app. Already playing? Go to the first level whose checklist you can't finish yet.</p>
-        <div class="hero-actions" style="justify-content:center">
-          <a class="btn btn-primary btn-lg" href="murphy-guitar-lab.html">Start Level 1</a>
-          <a class="btn btn-secondary btn-lg" href="#level-2">Jump to Level 2</a>
+    <section class="section">
+      <div class="wrap">
+        <div class="cta-band strings">
+          <h2>Start at the beginning, <em>or start where you are.</em></h2>
+          <p>New to guitar? Level 1 runs in the free lesson app. Already playing? Go to the first level whose checklist you can't finish yet. If you'd like a teacher along the way, Pat teaches every level one-on-one.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" href="lessons.html">Start Level 1</a>
+            <a class="btn btn-secondary btn-lg" href="index.html#lessons-with-pat">Lessons with Pat</a>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="wrap footer-inner">
-      <p><strong>Murphy's Guitar Lab</strong> · Let's-a fret.</p>
-      <p>Your ticked lessons are saved in this browser only.</p>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a class="logo" href="index.html">
+            <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 30c-3-3.5-11-12-11-19C5 5.5 10 3 16 3s11 2.5 11 8c0 7-8 15.5-11 19z" fill="#C9A96E"/><path d="M12.5 8v12M16 8v15M19.5 8v12" stroke="#1A140C" stroke-width="1.3" stroke-linecap="round" opacity=".55"/></svg>
+            Murphy's <span>Guitar Lab</span>
+          </a>
+          <p>Lessons you tick off are saved in this browser only.</p>
+        </div>
+        <div>
+          <h4>Learn</h4>
+          <ul>
+            <li><a href="lessons.html">Free beginner app</a></li>
+            <li><a href="course.html">Full course</a></li>
+            <li><a href="index.html#tips">Practice tips</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Lessons</h4>
+          <ul>
+            <li><a href="index.html#lessons-with-pat">Prices</a></li>
+            <li><a href="index.html#faq">Questions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Murphy's Guitar Lab</span>
+        <span>Let's-a fret.</span>
+      </div>
     </div>
   </footer>
 
-  <script src="script.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
   <script>
     (function () {
       const KEY = "mgl-course-done";
@@ -1160,6 +1253,18 @@ A|-3-------3-------|</pre>
         });
       });
       refresh();
+
+      // Highlight the level you're reading in the sticky level bar.
+      const links = [...document.querySelectorAll(".level-nav a")];
+      if ("IntersectionObserver" in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            links.forEach((a) => a.classList.toggle("on", a.getAttribute("href") === "#" + e.target.id));
+          });
+        }, { rootMargin: "-40% 0px -55% 0px" });
+        document.querySelectorAll(".level").forEach((s) => io.observe(s));
+      }
     })();
   </script>
 </body>

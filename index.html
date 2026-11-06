@@ -3,176 +3,323 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Murphy's Guitar Lab — Let's-a fret</title>
-  <meta name="description" content="Beginner guitar lessons in small steps: two chords, your first song, then your first notes, with a backing band that plays along.">
+  <title>Murphy's Guitar Lab — Learn guitar with Pat</title>
+  <meta name="description" content="Learn guitar with Pat: free beginner lessons with a built-in tuner and backing band, a five-level course from first chord to advanced, and one-on-one lessons online.">
+  <meta property="og:title" content="Murphy's Guitar Lab — Learn guitar with Pat">
+  <meta property="og:description" content="Free beginner lessons, a five-level course, and one-on-one lessons online.">
+  <meta property="og:image" content="assets/img/pat-wave.jpg">
+  <meta name="theme-color" content="#0E1014">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 30c-3-3.5-11-12-11-19C5 5.5 10 3 16 3s11 2.5 11 8c0 7-8 15.5-11 19z' fill='%23C9A96E'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,700&family=Outfit:wght@400;520;650&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,560;0,9..144,700;1,9..144,560&family=Outfit:wght@400;520;650&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
+
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="logo" href="#top">Murphy's <span>Guitar Lab</span></a>
+      <a class="logo" href="index.html" aria-label="Murphy's Guitar Lab home">
+        <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 30c-3-3.5-11-12-11-19C5 5.5 10 3 16 3s11 2.5 11 8c0 7-8 15.5-11 19z" fill="#C9A96E"/><path d="M12.5 8v12M16 8v15M19.5 8v12" stroke="#1A140C" stroke-width="1.3" stroke-linecap="round" opacity=".55"/></svg>
+        Murphy's <span>Guitar Lab</span>
+      </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
       <nav id="site-nav" class="site-nav" aria-label="Primary">
-        <a href="#method">How it works</a>
-        <a href="#path">Lessons</a>
+        <a href="lessons.html">Free lessons</a>
         <a href="course.html">Full course</a>
-        <a href="#practice">Practice tips</a>
+        <a href="#lessons-with-pat">Lessons with Pat</a>
         <a href="#faq">Questions</a>
-        <a class="btn btn-primary" href="murphy-guitar-lab.html">Start learning</a>
+        <a class="btn btn-primary" href="lessons.html">Start free</a>
       </nav>
     </div>
   </header>
+
   <main id="main">
-    <section class="hero" id="top">
+    <!-- ================= HERO ================= -->
+    <section class="hero strings" id="top">
       <div class="wrap hero-grid">
         <div>
-          <p class="eyebrow">Beginner guitar · 10 minutes a day</p>
-          <h1>Play your first song this week.</h1>
-          <p class="lede">Murphy's Guitar Lab teaches guitar in small steps: two easy chords, a simple strum, then your first notes. A backing band plays along with you, and you never need to read music.</p>
+          <p class="eyebrow">Guitar lessons · beginner to advanced</p>
+          <h1>Learn guitar with Pat. <em>Play your first song this week.</em></h1>
+          <p class="lede">Start with free lessons that have a tuner and a backing band built in. Then follow a five-level course all the way to advanced playing, with one-on-one lessons whenever you want a teacher.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary btn-lg" href="murphy-guitar-lab.html">Start lesson 1</a>
-            <a class="btn btn-secondary btn-lg" href="#path">See what you'll learn</a>
+            <a class="btn btn-primary btn-lg" href="lessons.html">
+              Start lesson 1 free
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="btn btn-secondary btn-lg" href="#lessons-with-pat">Lessons with Pat</a>
           </div>
-          <p class="trust">Free · runs in your browser · built-in tuner · turn your sound on</p>
-        </div>
-        <aside class="hero-card">
-          <p class="eyebrow">Your daily practice</p>
-          <p class="hero-card-title">10 minutes</p>
-          <ul class="hero-list">
-            <li><strong>2 min</strong> switching chords</li>
-            <li><strong>3 min</strong> practising the scale</li>
-            <li><strong>2 min</strong> strumming with a chart</li>
-            <li><strong>3 min</strong> playing a song</li>
+          <ul class="hero-proof">
+            <li><strong>20+</strong><span>years playing</span></li>
+            <li><strong>40</strong><span>lessons, 5 levels</span></li>
+            <li><strong>10 min</strong><span>a day to start</span></li>
           </ul>
-          <p>Same plan every day. Short and often beats long and rare.</p>
+        </div>
+        <div class="pat-stage">
+          <p class="bubble">Hi, I'm Pat. Grab your guitar. Let's-a fret!</p>
+          <img src="assets/img/pat-wave.jpg" width="604" height="900" alt="Pat, a cartoon guitarist in a teal cap and rust waistcoat, waving and holding a sunburst electric guitar">
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= THREE WAYS ================= -->
+    <section class="section section-alt" id="ways">
+      <div class="wrap">
+        <div class="section-head center">
+          <p class="eyebrow">Three ways to learn</p>
+          <h2>Start free. Go as far as you want.</h2>
+          <p>Every option follows the same step-by-step path, so you can switch between them whenever you like.</p>
+        </div>
+        <div class="cards three">
+          <article class="card way">
+            <span class="tag free">Free</span>
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M10 8.5v5l4-2.5-4-2.5zM8 21h8M12 17v4"/></svg></div>
+            <h3>The beginner app</h3>
+            <p>Twelve short lessons that run in your browser. You'll learn your first chords, first song and first scale.</p>
+            <ul>
+              <li>Built-in tuner and metronome</li>
+              <li>A backing band to play along with</li>
+              <li>No sign-up and no reading music</li>
+            </ul>
+            <a class="btn btn-primary" href="lessons.html">Open the app</a>
+          </article>
+          <article class="card way">
+            <span class="tag free">Free</span>
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="m2 13 10 5 10-5"/><path d="m2 17.5 10 5 10-5" opacity=".5"/></svg></div>
+            <h3>The full course</h3>
+            <p>Forty lessons in five levels, from open chords to jazz harmony, home recording and performing.</p>
+            <ul>
+              <li>Clear goals for every lesson</li>
+              <li>A practice plan for each level</li>
+              <li>Song lists and fixes for common problems</li>
+            </ul>
+            <a class="btn btn-secondary" href="course.html">See the course</a>
+          </article>
+          <article class="card way">
+            <span class="tag">From $35</span>
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m16 10 6-3.5v11L16 14"/></svg></div>
+            <h3>Lessons with Pat</h3>
+            <p>Live one-on-one video lessons. You get feedback on your playing and a plan built around the songs you love.</p>
+            <ul>
+              <li>Any level, any style</li>
+              <li>A written practice plan after each lesson</li>
+              <li>A recording of every lesson to keep</li>
+            </ul>
+            <a class="btn btn-secondary" href="#lessons-with-pat">See prices</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= LEVEL PATH ================= -->
+    <section class="section" id="path">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Your path</p>
+          <h2>Five levels, from <em>first chord</em> to finding your own sound.</h2>
+          <p>Each level ends with a short checklist. When you can do everything on it, you move up.</p>
+        </div>
+        <ol class="path">
+          <li><a href="course.html#level-1"><span class="dot">1</span><h3>Beginner</h3><span class="when">About 2 months</span><p>Open chords, strumming, your first songs and your first scale.</p></a></li>
+          <li><a href="course.html#level-2"><span class="dot">2</span><h3>Advanced beginner</h3><span class="when">Months 2–4</span><p>Power chords, the 12-bar blues, bends and fingerpicking.</p></a></li>
+          <li><a href="course.html#level-3"><span class="dot">3</span><h3>Intermediate</h3><span class="when">Months 4–9</span><p>Barre chords, keys, and soloing across the whole neck.</p></a></li>
+          <li><a href="course.html#level-4"><span class="dot">4</span><h3>Upper intermediate</h3><span class="when">Months 9–18</span><p>CAGED, modes, learning by ear and songwriting.</p></a></li>
+          <li><a href="course.html#level-5"><span class="dot">5</span><h3>Advanced</h3><span class="when">18 months on</span><p>Jazz harmony, advanced technique, recording and performing.</p></a></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= INSIDE THE APP ================= -->
+    <section class="section section-alt" id="app">
+      <div class="wrap split">
+        <div>
+          <p class="eyebrow">Inside the free app</p>
+          <h2>Everything you need, right in your browser.</h2>
+          <ul class="feature-list">
+            <li>
+              <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18a8 8 0 1 1 16 0"/><path d="m12 18 4-6"/></svg></span>
+              <div><strong>A tuner that listens</strong><span>Play a string and it shows you whether to tighten or loosen it.</span></div>
+            </li>
+            <li>
+              <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+              <div><strong>A band that plays along</strong><span>Drums and bass keep time while you strum, at slow, medium or fast speed.</span></div>
+            </li>
+            <li>
+              <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M4 15h16M10 3v18M15 3v18"/></svg></span>
+              <div><strong>Chord pictures and tab</strong><span>See where your fingers go, and hear what it should sound like.</span></div>
+            </li>
+            <li>
+              <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8l-3-17h-2L8 21z"/><path d="m12 13 5-6"/></svg></span>
+              <div><strong>A metronome</strong><span>A steady click to practise with, so your timing improves along with your hands.</span></div>
+            </li>
+          </ul>
+          <a class="btn btn-primary btn-lg" href="lessons.html">Start lesson 1</a>
+        </div>
+        <aside class="practice-card" aria-label="Daily practice plan">
+          <p class="eyebrow">Your daily practice</p>
+          <h3>10 minutes</h3>
+          <ul class="timeline">
+            <li><b>2 min</b><span class="bar" style="width:40%"></span><small>Switching chords</small></li>
+            <li><b>3 min</b><span class="bar t2" style="width:60%"></span><small>Practising the scale</small></li>
+            <li><b>2 min</b><span class="bar t3" style="width:40%"></span><small>Strumming with a chart</small></li>
+            <li><b>3 min</b><span class="bar t4" style="width:60%"></span><small>Playing a song</small></li>
+          </ul>
+          <p class="foot">Same plan every day. Short and often beats long and rare.</p>
+          <img class="pat-peek" src="assets/img/pat-teach.jpg" width="604" height="900" alt="" loading="lazy">
         </aside>
       </div>
     </section>
 
-    <section class="section" id="method">
+    <!-- ================= LESSONS WITH PAT ================= -->
+    <section class="section" id="lessons-with-pat">
       <div class="wrap">
-        <p class="eyebrow">How it works</p>
-        <h2>Songs first. Theory later.</h2>
-        <div class="cards three">
-          <article class="card">
-            <h3>1. Two chords</h3>
-            <p>You'll learn Em and G and switch between them in time with a band. That's enough to play a real song.</p>
+        <div class="section-head center">
+          <p class="eyebrow">Lessons with Pat</p>
+          <h2>One-on-one lessons, online.</h2>
+          <p>Live video lessons from home. Pat listens to you play, fixes what's holding you back, and builds each lesson around songs you want to play.</p>
+        </div>
+        <div class="pricing">
+          <article class="card price">
+            <h3>Trial lesson</h3>
+            <p class="amount">$25 <small>/ 30 min</small></p>
+            <p class="per">One time, for new students</p>
+            <ul>
+              <li>Find out where you're at</li>
+              <li>Learn something new on the spot</li>
+              <li>Leave with a practice plan</li>
+            </ul>
+            <a class="btn btn-secondary" href="#" data-book>Book a trial</a>
           </article>
-          <article class="card">
-            <h3>2. Your first notes</h3>
-            <p>Next comes a five-note scale that always sounds good. You'll play it over the band and make up your own little tunes.</p>
+          <article class="card price featured">
+            <span class="badge">Most popular</span>
+            <h3>Monthly plan</h3>
+            <p class="amount">$139 <small>/ month</small></p>
+            <p class="per">Four 30-minute lessons</p>
+            <ul>
+              <li>A weekly lesson at a time that suits you</li>
+              <li>A written plan after every lesson</li>
+              <li>A recording of every lesson</li>
+              <li>Questions by message between lessons</li>
+            </ul>
+            <a class="btn btn-primary" href="#" data-book>Start a monthly plan</a>
           </article>
-          <article class="card">
-            <h3>3. More when you're ready</h3>
-            <p>Once the basics feel easy, there are more chords and some extra credit on how the neck fits together. No rush.</p>
+          <article class="card price">
+            <h3>Single lesson</h3>
+            <p class="amount">$45 <small>/ 30 min</small></p>
+            <p class="per">Or $75 for 60 minutes</p>
+            <ul>
+              <li>No commitment</li>
+              <li>Great for a specific song or skill</li>
+              <li>Any level, any style</li>
+            </ul>
+            <a class="btn btn-secondary" href="#" data-book>Book a lesson</a>
           </article>
+        </div>
+        <p class="pricing-note">Also available: small group classes for beginners, video feedback on your playing, and help setting up a home recording studio. Ask when you book.</p>
+      </div>
+    </section>
+
+    <!-- ================= TIPS ================= -->
+    <section class="section section-alt" id="tips">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">Practice tips</p>
+          <h2>Four habits that make the difference.</h2>
+        </div>
+        <div class="cards four tips">
+          <article class="card"><span class="tip-num">01</span><h3>Slow is fast</h3><p>Play slowly enough that you never stop. Speed comes on its own once your hands know the moves.</p></article>
+          <article class="card"><span class="tip-num">02</span><h3>Count your changes</h3><p>Set a one-minute timer and count your clean chord switches. Try to beat that number tomorrow.</p></article>
+          <article class="card"><span class="tip-num">03</span><h3>End on a home note</h3><p>When you make up a tune, finish on a note from the band's chord. It'll sound finished.</p></article>
+          <article class="card"><span class="tip-num">04</span><h3>Sore fingers are normal</h3><p>Fingertips toughen up in two or three weeks. Short daily sessions help more than long ones.</p></article>
         </div>
       </div>
     </section>
 
-    <section class="section section-alt" id="path">
-      <div class="wrap">
-        <p class="eyebrow">The lessons</p>
-        <h2>What you'll learn, step by step</h2>
-        <ol class="track">
-          <li><strong>Meet your guitar.</strong> String names, frets, finger numbers, and a built-in tuner.</li>
-          <li><strong>Holding it.</strong> How to sit, where your thumb goes, and how to hold a pick.</li>
-          <li><strong>Reading tab.</strong> The simple way guitarists write music down.</li>
-          <li><strong>Your first chord: Em.</strong> Two fingers, six strings, one strum per beat.</li>
-          <li><strong>Changing chords.</strong> Add G, then the one-minute challenge.</li>
-          <li><strong>Your first song.</strong> Em and G with a band, reading a simple chord chart.</li>
-          <li><strong>Strumming up and down.</strong> The hand swing and the strum pattern behind countless songs.</li>
-          <li><strong>Your first notes.</strong> Four single notes over a backing track.</li>
-          <li><strong>The five-note scale.</strong> The scale behind most rock and blues solos.</li>
-          <li><strong>Ending on a home note.</strong> Why some notes sound finished, and how to use that.</li>
-          <li><strong>More chords.</strong> Nine open chords and the famous C – Am – F – G.</li>
-          <li><strong>Jam room.</strong> Pick a band and play along.</li>
-        </ol>
-        <a class="btn btn-primary" href="murphy-guitar-lab.html">Start at lesson 1</a>
-      </div>
-    </section>
-
-    <section class="section" id="course">
-      <div class="wrap">
-        <p class="eyebrow">The full course</p>
-        <h2>Beginner to advanced, in five levels</h2>
-        <p class="section-lede">The lessons above are Level 1. When you finish them, the course goes on to rock and blues, the whole neck, musicianship and advanced playing.</p>
-        <div class="cards three">
-          <article class="card"><h3>Levels 1–2</h3><p>Open chords, songs, power chords, the 12-bar blues, your first solos and fingerpicking.</p></article>
-          <article class="card"><h3>Levels 3–4</h3><p>Barre chords, keys, all five scale positions, CAGED, modes and learning by ear.</p></article>
-          <article class="card"><h3>Level 5</h3><p>Jazz harmony, advanced technique, solo arrangements, home recording and performing.</p></article>
+    <!-- ================= FAQ ================= -->
+    <section class="section" id="faq">
+      <div class="narrow">
+        <div class="section-head">
+          <p class="eyebrow">Questions</p>
+          <h2>Good to know</h2>
         </div>
-        <p style="margin-top:1.4rem"><a class="btn btn-secondary" href="course.html">See all 40 lessons</a></p>
-      </div>
-    </section>
-
-    <section class="section" id="practice">
-      <div class="wrap">
-        <p class="eyebrow">Practice tips</p>
-        <h2>Four habits that help</h2>
-        <div class="cards two">
-          <article class="card">
-            <h3>Slow is fast</h3>
-            <p>Play slowly enough that you never stop. Speed comes on its own once your hands know the moves.</p>
-          </article>
-          <article class="card">
-            <h3>Count your changes</h3>
-            <p>Set a one-minute timer and count how many clean chord switches you make. Try to beat it tomorrow.</p>
-          </article>
-          <article class="card">
-            <h3>End on a home note</h3>
-            <p>When you make up a tune, finish on a note from the chord the band is playing. It'll sound finished.</p>
-          </article>
-          <article class="card">
-            <h3>Sore fingers are normal</h3>
-            <p>Your fingertips will toughen up in two or three weeks. Short daily sessions help more than long ones.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-alt" id="faq">
-      <div class="wrap narrow">
-        <h2>Questions</h2>
         <div class="faq">
           <details open>
             <summary>Do I need to read music?</summary>
-            <p>No. Everything uses tab and chord pictures, and every lesson explains how to read them.</p>
+            <p>No. Everything uses tab and chord pictures, and the lessons show you how to read them.</p>
           </details>
           <details>
             <summary>What guitar do I need?</summary>
-            <p>Any acoustic or electric guitar works. Just make sure it's in tune. Lesson 1 has a tuner that listens through your microphone.</p>
+            <p>Any acoustic or electric guitar works, as long as it's in tune. The first lesson has a tuner that listens through your microphone.</p>
           </details>
           <details>
             <summary>How long until I can play a song?</summary>
-            <p>Most people can play Em – G with the band (lesson 6) within a week of 10-minute practice.</p>
+            <p>Most people can play their first song with the backing band within a week of practising 10 minutes a day.</p>
           </details>
           <details>
-            <summary>Which file do I open?</summary>
-            <p><strong>index.html</strong> is this page. <strong>murphy-guitar-lab.html</strong> has the lessons. Keep both in the same folder.</p>
+            <summary>I already play. Where should I start?</summary>
+            <p>Look at the checklist at the end of each level in the full course. Start at the first level where you can't do everything on the list yet.</p>
+          </details>
+          <details>
+            <summary>How do online lessons work?</summary>
+            <p>You join a video call from your computer, tablet or phone. You'll need a quiet room and a camera that shows your fretting hand. After each lesson you get a written practice plan and a recording.</p>
+          </details>
+          <details>
+            <summary>What if I need to cancel a lesson?</summary>
+            <p>Give at least 24 hours' notice and the lesson can be moved to another time for free.</p>
           </details>
         </div>
       </div>
     </section>
 
-    <section class="cta">
-      <div class="wrap narrow cta-inner">
-        <h2>Grab your guitar. Let's-a fret.</h2>
-        <p>Lesson 1 takes about ten minutes.</p>
-        <a class="btn btn-primary btn-lg" href="murphy-guitar-lab.html">Start lesson 1</a>
+    <!-- ================= CTA ================= -->
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="cta-band strings">
+          <h2>Grab your guitar. <em>Let's-a fret.</em></h2>
+          <p>Lesson 1 takes about ten minutes. It's free, runs in your browser, and doesn't need a sign-up.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" href="lessons.html">Start lesson 1 free</a>
+            <a class="btn btn-secondary btn-lg" href="course.html">Browse the course</a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
+
   <footer class="site-footer">
-    <div class="wrap footer-inner">
-      <p><strong>Murphy's Guitar Lab</strong> · Let's-a fret.</p>
-      <p>Keep murphy-guitar-lab.html in this folder. It holds the lessons.</p>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <a class="logo" href="index.html">
+            <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 30c-3-3.5-11-12-11-19C5 5.5 10 3 16 3s11 2.5 11 8c0 7-8 15.5-11 19z" fill="#C9A96E"/><path d="M12.5 8v12M16 8v15M19.5 8v12" stroke="#1A140C" stroke-width="1.3" stroke-linecap="round" opacity=".55"/></svg>
+            Murphy's <span>Guitar Lab</span>
+          </a>
+          <p>Guitar lessons in small steps, from your first chord to your own sound.</p>
+        </div>
+        <div>
+          <h4>Learn</h4>
+          <ul>
+            <li><a href="lessons.html">Free beginner app</a></li>
+            <li><a href="course.html">Full course</a></li>
+            <li><a href="index.html#tips">Practice tips</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Lessons</h4>
+          <ul>
+            <li><a href="index.html#lessons-with-pat">Prices</a></li>
+            <li><a href="index.html#faq">Questions</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year>2026</span> Murphy's Guitar Lab</span>
+        <span>Let's-a fret.</span>
+      </div>
     </div>
   </footer>
-  <script src="script.js" defer></script>
+
+  <script src="assets/js/site.js" defer></script>
 </body>
 </html>

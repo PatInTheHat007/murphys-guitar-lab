@@ -127,6 +127,8 @@ dl.words dd{margin:.1rem 0 0;color:var(--muted)}
 <aside>
   <a class="mark" href="index.html">Murphy's <span>Guitar Lab</span><em>Let's-a fret</em></a>
   <nav id="nav"></nav>
+  <div class="nav-sep">Keep going</div>
+  <a href="course.html" style="display:block;padding:.45rem .6rem;color:var(--muted);font:520 .85rem Outfit,sans-serif;text-decoration:none">Full course (Levels 2–5) →</a>
 </aside>
 <div>
 <section class="page on" id="p0"></section>
@@ -179,7 +181,7 @@ function pager(a,b){return `<div class="pager">${a?`<button onclick="show('${a}'
 function patHero(pose,line,title,body,pid,pocket){
   return `<div class="hero"><div class="copy"><div class="bubble">${line}</div>
   <p class="eyebrow">${title}</p>${body}</div>
-  <button class="pat-btn" aria-label="Show Pat's tip" aria-controls="${pid}" onclick="document.getElementById('${pid}').classList.toggle('on')"><img src="${pose==="teach"?"pat-teach.png":"pat-wave.png"}" alt="Pat holding a Les Paul"/></button></div>
+  <button class="pat-btn" aria-label="Show Pat's tip" aria-controls="${pid}" onclick="document.getElementById('${pid}').classList.toggle('on')"><img src="${pose==="teach"?"assets/img/pat-teach.jpg":"assets/img/pat-wave.jpg"}" alt="Pat holding a Les Paul"/></button></div>
   <div class="pocket" id="${pid}"><p><strong>Pat's tip:</strong> ${pocket}</p></div>`;
 }
 function lesson(o){
