@@ -8,9 +8,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,700&family=Outfit:wght@400;520;650&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --bg:#0F1115;--surface:#1C1C1C;--surface-2:#181C22;--border:#303741;
-  --text:#F5F1E8;--muted:#B8B2A8;--accent:#C9A96E;--accent-hover:#D4B67A;
-  --good:#5CCB91;--side:240px
+  /* Same palette as the main site (assets/css/site.css): ink surfaces, one rust accent.
+     --accent fills buttons and dots (white text on it); --accent-text is rust tuned for text on ink. */
+  --bg:#0F1D22;--surface:#1B323A;--surface-2:#13262C;--border:#2B4750;
+  --text:#F7F3EC;--muted:#B7C4C6;--accent:#C2511F;--accent-hover:#A9441A;--accent-text:#F4A47A;
+  --good:#7FD3A6;--side:240px
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--text);font-family:Outfit,system-ui,sans-serif;line-height:1.65;font-size:17px}
@@ -19,63 +21,63 @@ h3{margin:1.6rem 0 .4rem}
 .app{display:grid;grid-template-columns:var(--side) 1fr;min-height:100vh}
 aside{background:var(--surface-2);border-right:1px solid var(--border);padding:1rem .8rem 6.5rem;position:sticky;top:0;height:100vh;overflow:auto}
 .mark{color:var(--text);margin:0;font-size:1.05rem;text-decoration:none;display:block}
-.mark span{color:var(--accent)}
+.mark span{color:var(--accent-text)}
 .mark em{display:block;font-style:normal;font-family:Outfit,sans-serif;font-size:.72rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:.2rem}
 aside nav{display:flex;flex-direction:column;gap:.1rem;margin-top:.9rem}
 aside button.nav{text-align:left;background:transparent;color:var(--muted);border:0;padding:.45rem .6rem;border-radius:10px;cursor:pointer;font:520 .85rem Outfit,sans-serif}
 aside button.nav.on{background:var(--surface);color:var(--text);box-shadow:inset 3px 0 0 var(--accent)}
 aside button.nav.done::after{content:" ✓";color:var(--good)}
-aside .nav-sep{margin:.8rem .6rem .2rem;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+aside .nav-sep{margin:.8rem .6rem .2rem;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-text)}
 .page{display:none;padding:1.1rem 1.3rem 8rem;max-width:840px}
 .page.on{display:block}
 .hero{position:relative;overflow:hidden;min-height:190px;background:radial-gradient(500px 180px at 100% 0%,color-mix(in srgb,var(--accent) 14%,transparent),transparent 60%),var(--surface);border:1px solid var(--border);border-radius:16px;padding:1.2rem 160px 1.2rem 1.2rem}
 .hero h1,.hero h2{margin:.2rem 0 .4rem}
 .hero p{margin:.3rem 0}
 .pat-btn{position:absolute;right:-6px;bottom:-10px;background:none;border:0;padding:0;border-radius:0;cursor:pointer}
-.pat-btn img{height:200px;display:block;mask-image:linear-gradient(to top,transparent 0%,#000 16%,#000)}
-.eyebrow{letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-size:.7rem;margin:0 0 .4rem}
+.pat-btn img{height:200px;display:block;mix-blend-mode:lighten;mask-image:linear-gradient(to top,transparent 0%,#000 16%,#000)}
+.eyebrow{letter-spacing:.16em;text-transform:uppercase;color:var(--accent-text);font-size:.7rem;margin:0 0 .4rem}
 p,li,td{color:var(--muted)}
 strong,th{color:var(--text)}
-code{background:#101318;border:1px solid var(--border);padding:0 .35rem;border-radius:6px;color:var(--text)}
+code{background:#0E1C21;border:1px solid var(--border);padding:0 .35rem;border-radius:6px;color:var(--text)}
 .learn{background:var(--surface-2);border:1px solid var(--border);border-radius:14px;padding:.7rem 1rem;margin:1rem 0}
 .learn ul{margin:.25rem 0 0;padding-left:1.2rem}
 .plain{background:var(--surface-2);border-left:3px solid var(--accent);padding:.75rem 1rem;border-radius:0 12px 12px 0}
 ol.steps{counter-reset:s;list-style:none;padding:0}
 ol.steps li{counter-increment:s;position:relative;padding-left:2.3rem;margin:.6rem 0}
-ol.steps li::before{content:counter(s);position:absolute;left:0;top:.1rem;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--accent);color:#1A140C;font-weight:650;font-size:.82rem;display:grid;place-items:center}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:.1rem;width:1.6rem;height:1.6rem;border-radius:50%;background:var(--accent);color:#fff;font-weight:650;font-size:.82rem;display:grid;place-items:center}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:.9rem 1rem;margin:.55rem 0}
 .card h3{margin:0 0 .3rem}
 .card ul{padding-left:1.1rem;margin:.4rem 0 .7rem;font-size:.9rem}
 .row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:.6rem 0}
 .center{justify-content:center;text-align:center}
 button,input{font:650 .86rem Outfit,sans-serif;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--text);padding:.5rem .9rem;cursor:pointer}
-button:hover{border-color:var(--accent)}
-button.primary{background:var(--accent);border:0;color:#1A140C}
+button:hover{border-color:var(--accent-text)}
+button.primary{background:var(--accent);border:0;color:#fff}
 button.primary:hover{background:var(--accent-hover)}
 button.good{background:#1e3d2c;border-color:#2d6a44}
 .done-box{display:flex;gap:.7rem;align-items:flex-start;background:#15241b;border:1px solid #2d6a44;border-radius:14px;padding:.8rem 1rem;margin:1.6rem 0 0;cursor:pointer}
 .done-box input{width:1.25rem;height:1.25rem;margin:.2rem 0 0;padding:0;border-radius:4px;accent-color:var(--good);flex:none}
 .done-box span{color:var(--text)}
-.lab{position:fixed;left:var(--side);right:0;bottom:0;z-index:40;background:#0b0d11;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.32rem;align-items:center;padding:.5rem .7rem}
+.lab{position:fixed;left:var(--side);right:0;bottom:0;z-index:40;background:#0B171B;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.32rem;align-items:center;padding:.5rem .7rem}
 .lab .label{color:var(--muted);font-size:.78rem;margin-right:.1rem}
-.now{color:var(--accent);font-size:.82rem}
+.now{color:var(--accent-text);font-size:.82rem}
 .pager{display:flex;gap:.45rem;margin-top:1.1rem}
-pre.tab{font:600 13px/1.45 ui-monospace,Menlo,monospace;background:#101318;color:var(--text);padding:.7rem .85rem;border-radius:12px;overflow:auto;border:1px solid var(--border);margin:.4rem 0}
+pre.tab{font:600 13px/1.45 ui-monospace,Menlo,monospace;background:#0E1C21;color:var(--text);padding:.7rem .85rem;border-radius:12px;overflow:auto;border:1px solid var(--border);margin:.4rem 0}
 .pocket{display:none;background:var(--surface);border:1px solid var(--accent);border-radius:16px;padding:.8rem 1rem;margin:.55rem 0}
 .pocket.on{display:block}
 .pocket p{margin:0;color:var(--text)}
-.bubble{display:inline-block;background:var(--accent);color:#1A140C;padding:.32rem .65rem;border-radius:12px 12px 12px 4px;font-size:.84rem;margin-bottom:.5rem;font-weight:650}
+.bubble{display:inline-block;background:var(--accent);color:#fff;padding:.32rem .65rem;border-radius:12px 12px 12px 4px;font-size:.84rem;margin-bottom:.5rem;font-weight:650}
 .pair{margin:.5rem 0 1rem}
-.neck-wrap{background:#101318;border:1px solid var(--border);border-radius:16px;padding:.4rem;overflow:auto}
+.neck-wrap{background:#0E1C21;border:1px solid var(--border);border-radius:16px;padding:.4rem;overflow:auto}
 .chart{display:grid;grid-template-columns:repeat(var(--n),1fr);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin:.7rem 0 .2rem;background:var(--surface)}
 .bar{padding:.65rem .7rem;border-right:2px solid var(--border)}
 .bar:last-child{border-right:0}
 .bar h4{margin:0 0 .45rem;font-family:Fraunces,serif;font-size:1.3rem;text-align:center;color:var(--text)}
 .slashes{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
-.slash{text-align:center;padding:.45rem 0 .25rem;border-radius:8px;background:#101318;color:var(--muted);font-size:.8rem}
+.slash{text-align:center;padding:.45rem 0 .25rem;border-radius:8px;background:#0E1C21;color:var(--muted);font-size:.8rem}
 .slash b{display:block;font-size:1.15rem;color:var(--text)}
-.slash.on{background:var(--accent);color:#1A140C}
-.slash.on b{color:#1A140C}
+.slash.on{background:var(--accent);color:#fff}
+.slash.on b{color:#fff}
 .hint{color:var(--muted);font-size:.84rem}
 table.grid{border-collapse:collapse;width:100%;font-size:.9rem;margin:.6rem 0}
 table.grid th,table.grid td{border:1px solid var(--border);padding:.5rem;text-align:left}
@@ -84,7 +86,7 @@ table.grid th,table.grid td{border:1px solid var(--border);padding:.5rem;text-al
 .pitch.on{background:#1e3d2c}
 .jam-board{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
 .jam-board .card{text-align:center}
-.big-count{font:700 3.4rem/1 Fraunces,serif;color:var(--accent);text-align:center;margin:.3rem 0}
+.big-count{font:700 3.4rem/1 Fraunces,serif;color:var(--accent-text);text-align:center;margin:.3rem 0}
 details.extra{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:.8rem 1rem;margin:.7rem 0}
 details.extra summary{cursor:pointer;font-weight:650;color:var(--text)}
 details.extra summary span{display:block;font-weight:400;font-size:.85rem;color:var(--muted)}
@@ -92,13 +94,13 @@ dl.words dt{font-weight:650;color:var(--text);margin-top:.9rem}
 dl.words dd{margin:.1rem 0 0;color:var(--muted)}
 .card-foot{margin-top:1.2rem;color:var(--muted);font-size:.82rem}
 .strum-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin:.4rem 0}
-.tuner-note{font:700 3.4rem/1 Fraunces,serif;color:var(--accent);text-align:center;margin:.2rem 0 .6rem}
-.meter{position:relative;height:34px;border-radius:999px;background:#101318;border:1px solid var(--border);margin:0 auto;max-width:420px;display:flex;justify-content:space-between;align-items:center;padding:0 .8rem;font-size:.72rem;color:var(--muted)}
+.tuner-note{font:700 3.4rem/1 Fraunces,serif;color:var(--accent-text);text-align:center;margin:.2rem 0 .6rem}
+.meter{position:relative;height:34px;border-radius:999px;background:#0E1C21;border:1px solid var(--border);margin:0 auto;max-width:420px;display:flex;justify-content:space-between;align-items:center;padding:0 .8rem;font-size:.72rem;color:var(--muted)}
 .meter .mid{position:absolute;left:50%;top:4px;bottom:4px;width:2px;background:var(--good);opacity:.6}
 .meter .needle{position:absolute;left:50%;top:3px;bottom:3px;width:6px;margin-left:-3px;border-radius:3px;background:var(--accent);transition:left .12s}
 .lab .more{display:contents}
 .lab .more-btn{display:none}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+:focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
 @media(max-width:900px){
   :root{--side:0px}
   .app{grid-template-columns:1fr}
@@ -162,7 +164,7 @@ dl.words dd{margin:.1rem 0 0;color:var(--muted)}
   <button onclick="goTuner()">Tuner</button>
   <button onclick="stopAll()">Stop sound</button>
   <button class="more-btn" aria-expanded="false" onclick="this.setAttribute('aria-expanded',document.getElementById('lab').classList.toggle('open'))">Speed ▾</button>
-  <span id="countVis" style="font-family:Fraunces,serif;font-size:1.35rem;color:var(--accent);min-width:1.8rem"></span>
+  <span id="countVis" style="font-family:Fraunces,serif;font-size:1.35rem;color:var(--accent-text);min-width:1.8rem"></span>
   <span class="now" id="now">Slow 60</span>
 </div>
 <script>
@@ -205,18 +207,18 @@ function neckPlay(id,spec){
   const host=document.getElementById(id); if(!host) return; host.innerHTML="";
   const fromOpen=spec.lo===0, first=fromOpen?1:spec.lo, last=spec.hi, cols=last-first+1, nutW=fromOpen?10:6, left=62+nutW, top=30, fw=36, sh=22, w=left+fw*cols+16, h=top+sh*6+28;
   const s=svg("svg",{viewBox:`0 0 ${w} ${h}`,width:"100%",height:Math.min(h,230),role:"img","aria-label":"Guitar neck diagram"});
-  s.appendChild(svg("rect",{x:0,y:0,width:w,height:h,fill:"#101318",rx:10}));
-  s.appendChild(Object.assign(svg("text",{x:8,y:16,fill:"#C9A96E","font-size":11}),{textContent:spec.caption||"nut on the left · thin string on top"}));
+  s.appendChild(svg("rect",{x:0,y:0,width:w,height:h,fill:"#0E1C21",rx:10}));
+  s.appendChild(Object.assign(svg("text",{x:8,y:16,fill:"#F4A47A","font-size":11}),{textContent:spec.caption||"nut on the left · thin string on top"}));
   const nutX=62;
-  if(fromOpen){s.appendChild(svg("rect",{x:nutX,y:top-2,width:nutW,height:sh*5+4,fill:"#F5F1E8",rx:1}));s.appendChild(Object.assign(svg("text",{x:nutX+nutW/2,y:h-8,fill:"#C9A96E","text-anchor":"middle","font-size":9}),{textContent:"nut"}));}
-  else{s.appendChild(svg("line",{x1:nutX+4,y1:top,x2:nutX+4,y2:top+sh*5,stroke:"#A7B0BC","stroke-width":4}));s.appendChild(Object.assign(svg("text",{x:8,y:top+sh*2.5,fill:"#C9A96E","font-size":11}),{textContent:"fret "+first}));}
-  for(let i=0;i<=cols;i++){const x=left+i*fw;s.appendChild(svg("line",{x1:x,y1:top,x2:x,y2:top+sh*5,stroke:"#A7B0BC"}));if(i<cols)s.appendChild(Object.assign(svg("text",{x:x+fw/2,y:h-8,fill:(first+i===12)?"#C9A96E":"#8b93a0","text-anchor":"middle","font-size":10}),{textContent:first+i}));}
-  for(let vis=0;vis<6;vis++){const y=top+vis*sh;s.appendChild(svg("line",{x1:fromOpen?nutX:left,y1:y,x2:left+fw*cols,y2:y,stroke:"#d8c9b0"}));s.appendChild(Object.assign(svg("text",{x:4,y:y+4,fill:"#C9A96E","font-size":10}),{textContent:STR[5-vis]}));}
+  if(fromOpen){s.appendChild(svg("rect",{x:nutX,y:top-2,width:nutW,height:sh*5+4,fill:"#F5F1E8",rx:1}));s.appendChild(Object.assign(svg("text",{x:nutX+nutW/2,y:h-8,fill:"#F4A47A","text-anchor":"middle","font-size":9}),{textContent:"nut"}));}
+  else{s.appendChild(svg("line",{x1:nutX+4,y1:top,x2:nutX+4,y2:top+sh*5,stroke:"#A7B0BC","stroke-width":4}));s.appendChild(Object.assign(svg("text",{x:8,y:top+sh*2.5,fill:"#F4A47A","font-size":11}),{textContent:"fret "+first}));}
+  for(let i=0;i<=cols;i++){const x=left+i*fw;s.appendChild(svg("line",{x1:x,y1:top,x2:x,y2:top+sh*5,stroke:"#A7B0BC"}));if(i<cols)s.appendChild(Object.assign(svg("text",{x:x+fw/2,y:h-8,fill:(first+i===12)?"#F4A47A":"#8b93a0","text-anchor":"middle","font-size":10}),{textContent:first+i}));}
+  for(let vis=0;vis<6;vis++){const y=top+vis*sh;s.appendChild(svg("line",{x1:fromOpen?nutX:left,y1:y,x2:left+fw*cols,y2:y,stroke:"#d8c9b0"}));s.appendChild(Object.assign(svg("text",{x:4,y:y+4,fill:"#F4A47A","font-size":10}),{textContent:STR[5-vis]}));}
   function xy(str,fret){const y=top+(5-str)*sh;if(fret===0)return{x:nutX+nutW/2,y};return{x:left+(fret-first+.5)*fw,y};}
   const dots={};
-  (spec.ghosts||[]).forEach(g=>{const p=xy(g.s,g.f);s.appendChild(svg("circle",{cx:p.x,cy:p.y,r:9,fill:g.root?"#8a6a32":"#2d6a44",opacity:.55}));s.appendChild(Object.assign(svg("text",{x:p.x,y:p.y+3,fill:"#F5F1E8","text-anchor":"middle","font-size":9}),{textContent:g.lab||""}));dots[g.s+"-"+g.f]=p;});
-  const hot=svg("circle",{cx:-40,cy:-40,r:12,fill:"#C9A96E",stroke:"#F5F1E8","stroke-width":2});
-  const nxt=svg("circle",{cx:-40,cy:-40,r:13,fill:"none",stroke:"#C9A96E","stroke-width":2,"stroke-dasharray":"3 3"});
+  (spec.ghosts||[]).forEach(g=>{const p=xy(g.s,g.f);s.appendChild(svg("circle",{cx:p.x,cy:p.y,r:9,fill:g.root?"#8F3915":"#2d6a44",opacity:.55}));s.appendChild(Object.assign(svg("text",{x:p.x,y:p.y+3,fill:"#F5F1E8","text-anchor":"middle","font-size":9}),{textContent:g.lab||""}));dots[g.s+"-"+g.f]=p;});
+  const hot=svg("circle",{cx:-40,cy:-40,r:12,fill:"#C2511F",stroke:"#F5F1E8","stroke-width":2});
+  const nxt=svg("circle",{cx:-40,cy:-40,r:13,fill:"none",stroke:"#F4A47A","stroke-width":2,"stroke-dasharray":"3 3"});
   s.appendChild(nxt);s.appendChild(hot);host.appendChild(s);
   necks[id]={dots,hot,nxt,xy,light(str,fret,next){const p=dots[str+"-"+fret]||xy(str,fret);hot.setAttribute("cx",p.x);hot.setAttribute("cy",p.y);if(next){const q=dots[next.s+"-"+next.f]||xy(next.s,next.f);nxt.setAttribute("cx",q.x);nxt.setAttribute("cy",q.y);}else{nxt.setAttribute("cx",-40);nxt.setAttribute("cy",-40);}}};
 }
@@ -250,7 +252,7 @@ document.getElementById("p0").innerHTML=patHero("wave","Hi, I'm Pat. Click me an
 <li><strong>Turn your sound on.</strong> Gold and green buttons play sound so you can hear what it should sound like.</li>
 <li><strong>Use the bar at the bottom</strong> to set the speed and turn on a metronome (a steady click to play along with). Always start on <strong>Slow</strong>.</li>
 <li><strong>Tick the green box</strong> at the end of a lesson when you can do it. A ✓ appears in the menu.</li>
-<li><strong>Stuck on a word?</strong> Check the <a href="#" onclick="show('pW');return false" style="color:var(--accent)">Word list</a>.</li>
+<li><strong>Stuck on a word?</strong> Check the <a href="#" onclick="show('pW');return false" style="color:var(--accent-text)">Word list</a>.</li>
 </ol>
 <div class="card"><p class="eyebrow">Your 10 minutes a day</p>
 <p><strong>2 min</strong> changing chords · <strong>3 min</strong> the scale · <strong>2 min</strong> strumming with a chart · <strong>3 min</strong> playing a song. Same plan every day — just slot in whatever lesson you're on.</p></div>
@@ -663,8 +665,8 @@ const openRow=document.getElementById("openStrings");
 [0,1,2,3,4,5].forEach(s=>{const b=document.createElement("button");b.className="primary";b.textContent=`${6-s} · ${s===0?"low E":s===5?"high e":STR[s]}`;b.onclick=()=>{pluck(OPEN_MIDI[s],2.5,.25);necks.nkIntro?.light(s,0);setNow(`String ${6-s}: ${STR[s]}`);};openRow.appendChild(b);});
 
 NOTES.forEach((n,i)=>{const d=document.createElement("div");d.className="pitch"+(C_MAJOR.has(n)?" on":"");d.textContent=n;d.onclick=()=>{playHeld(60+i,700);setNow(n);};document.getElementById("chromatic").appendChild(d);});
-(function(){const cx=140,cy=140,R=98,s=svg("svg",{viewBox:"0 0 280 280",width:"220",height:"220"});["C","G","D","A","E","B","F#","Db","Ab","Eb","Bb","F"].forEach((k,i)=>{const ang=(i*30-90)*Math.PI/180;s.appendChild(svg("circle",{cx:cx+Math.cos(ang)*R,cy:cy+Math.sin(ang)*R,r:i?10:14,fill:i?"#1C1C1C":"#C9A96E"}));s.appendChild(Object.assign(svg("text",{x:cx+Math.cos(ang)*R,y:cy+Math.sin(ang)*R+3,fill:i?"#F5F1E8":"#1A140C","text-anchor":"middle","font-size":9}),{textContent:k}));});document.getElementById("cof").appendChild(s);})();
-(function(){const cx=140,cy=120,R=80,s=svg("svg",{viewBox:"0 0 280 250",width:"220",height:"200"});["C","E","G","B","D","F","A"].forEach((n,i)=>{const a=(i*360/7-90)*Math.PI/180,x=cx+Math.cos(a)*R,y=cy+Math.sin(a)*R;s.appendChild(svg("circle",{cx:x,cy:y,r:12,fill:n==="C"?"#C9A96E":"#2d6a44"}));s.appendChild(Object.assign(svg("text",{x,y:y+4,fill:n==="C"?"#1A140C":"#fff","text-anchor":"middle","font-size":11}),{textContent:n}));});document.getElementById("cot").appendChild(s);})();
+(function(){const cx=140,cy=140,R=98,s=svg("svg",{viewBox:"0 0 280 280",width:"220",height:"220"});["C","G","D","A","E","B","F#","Db","Ab","Eb","Bb","F"].forEach((k,i)=>{const ang=(i*30-90)*Math.PI/180;s.appendChild(svg("circle",{cx:cx+Math.cos(ang)*R,cy:cy+Math.sin(ang)*R,r:i?10:14,fill:i?"#1B323A":"#C2511F"}));s.appendChild(Object.assign(svg("text",{x:cx+Math.cos(ang)*R,y:cy+Math.sin(ang)*R+3,fill:i?"#F5F1E8":"#fff","text-anchor":"middle","font-size":9}),{textContent:k}));});document.getElementById("cof").appendChild(s);})();
+(function(){const cx=140,cy=120,R=80,s=svg("svg",{viewBox:"0 0 280 250",width:"220",height:"200"});["C","E","G","B","D","F","A"].forEach((n,i)=>{const a=(i*360/7-90)*Math.PI/180,x=cx+Math.cos(a)*R,y=cy+Math.sin(a)*R;s.appendChild(svg("circle",{cx:x,cy:y,r:12,fill:n==="C"?"#C2511F":"#2d6a44"}));s.appendChild(Object.assign(svg("text",{x,y:y+4,fill:n==="C"?"#fff":"#fff","text-anchor":"middle","font-size":11}),{textContent:n}));});document.getElementById("cot").appendChild(s);})();
 
 function drawStringCard(code,start,dots,play){
   const card=document.createElement("div");card.className="card";card.style.flex="1 1 200px";card.innerHTML=`<h3>${code}</h3><div class="neck-wrap" id="nk${code.replace(/\W/g,"")}"></div>`;
@@ -715,7 +717,7 @@ function drawChord(ch){
   for(let f=1;f<=4;f++)s.appendChild(svg("line",{x1:left,y1:top+f*fh,x2:left+sw*5,y2:top+f*fh,stroke:"#A7B0BC"}));
   ch.grid.forEach((g,i)=>{const x=left+i*sw;if(g==="x")s.appendChild(Object.assign(svg("text",{x,y:top-5,fill:"#F5F1E8","text-anchor":"middle","font-size":11}),{textContent:"×"}));
     else if(g==="0")s.appendChild(svg("circle",{cx:x,cy:top-8,r:4.5,fill:"none",stroke:"#F5F1E8"}));
-    else{const y=top+(+g-.5)*fh;s.appendChild(svg("circle",{cx:x,cy:y,r:6.5,fill:"#C9A96E"}));s.appendChild(Object.assign(svg("text",{x,y:y+3,fill:"#1A140C","text-anchor":"middle","font-size":9}),{textContent:ch.fingers[i]}));}});
+    else{const y=top+(+g-.5)*fh;s.appendChild(svg("circle",{cx:x,cy:y,r:6.5,fill:"#C2511F"}));s.appendChild(Object.assign(svg("text",{x,y:y+3,fill:"#fff","text-anchor":"middle","font-size":9}),{textContent:ch.fingers[i]}));}});
   return s;
 }
 function mount(id,keys){
@@ -797,7 +799,7 @@ function tunerFrame(){
     const ok=Math.abs(cents)<5,cl=Math.max(-50,Math.min(50,cents));
     document.getElementById("tunerString").textContent=`String ${6-s} · ${s===0?"low E":s===5?"high e":STR[s]}`;
     document.getElementById("tunerNote").textContent=STR[s].toUpperCase();
-    document.getElementById("tunerNote").style.color=ok?"var(--good)":"var(--accent)";
+    document.getElementById("tunerNote").style.color=ok?"var(--good)":"var(--accent-text)";
     const nd=document.getElementById("tunerNeedle");nd.style.left=(50+cl)+"%";nd.style.background=ok?"var(--good)":"var(--accent)";
     document.getElementById("tunerMsg").textContent=ok?"In tune ✓":Math.abs(cents)>50?(cents<0?"Way too low — tighten the string":"Way too high — loosen the string"):(cents<0?"A bit low — tighten slowly":"A bit high — loosen slowly");
   }
