@@ -2,3 +2,4 @@
 .claude/
 original-grok-version/
 private/
+.wrangler/
