@@ -67,6 +67,15 @@
       display: grid; grid-template-columns: 3.2rem 1fr auto; gap: .8rem; align-items: center;
     }
     .lesson summary::-webkit-details-marker { display: none; }
+    /* Each lesson opens in the lesson app. */
+    .lesson-link {
+      display: grid; grid-template-columns: 3.2rem 1fr auto auto; gap: .8rem; align-items: center;
+      padding: .9rem 1.1rem; color: var(--text); text-decoration: none;
+      transition: border-color .15s, transform .15s;
+    }
+    .lesson-link:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .lesson-link .go { color: var(--rust-text, var(--accent)); font-weight: 650; font-size: .9rem; white-space: nowrap; }
+    @media (prefers-reduced-motion: reduce) { .lesson-link:hover { transform: none; } }
     .lesson .num { font-family: var(--font-display); color: var(--accent); font-size: 1.05rem; }
     .lesson .name { font-weight: 650; }
     .lesson .name small { display: block; font-weight: 400; color: var(--muted); font-size: .9rem; }
@@ -179,7 +188,7 @@
           </ul>
         </div>
         <div class="pat-stage">
-          <p class="bubble">Tick each lesson as you go. I'll keep track!</p>
+          <p class="bubble">Every lesson opens in the app. I'll keep track!</p>
           <img src="assets/img/pat-teach.jpg" width="604" height="900" alt="Pat, a cartoon guitarist in a teal cap, pointing at the neck of his guitar">
         </div>
       </div>
@@ -213,161 +222,26 @@
         </div>
 
         <div class="path-note">
-          <p><strong>Level 1 is the free lesson app.</strong> Do the app's 12 lessons in order and you've covered everything below. When you can tick off the checklist at the bottom, move on to Level 2.</p>
+          <p><strong>Every lesson opens in the lesson app</strong>, with Pat's warm-ups, a metronome and your progress ticks. Level 1 is free. Start at the beginning, or pick any lesson below.</p>
           <a class="btn btn-primary" href="lessons.html">Open the lesson app</a>
         </div>
 
         <div class="lessons">
-          <details class="lesson" data-id="1-1">
-            <summary><span class="num">1.1</span><span class="name">Meet your guitar<small>Strings, frets, finger numbers and tuning</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>The string names, low to high: <strong>E A D G B E</strong></li>
-                <li>How frets are numbered, and which finger is 1, 2, 3 and 4</li>
-                <li>How to tune with a tuner, and to check by ear with the 5th-fret method</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Tune up every day before you play. Say each string name out loud as you pluck it.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can tune all six strings in under two minutes.</li></ul>
-              <p>In the app: <a class="app-link" href="lessons.html#p1">Lesson 1</a></p>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="p1" href="lessons.html#p1"><span class="num">1.1</span><span class="name">Meet your guitar<small>Strings, frets, finger numbers and tuning</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="1-2">
-            <summary><span class="num">1.2</span><span class="name">Holding the guitar and pick<small>Posture, thumb position, pick grip and the strumming motion</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Sitting position, with the guitar body resting on your leg and the neck tilted up a little</li>
-                <li>Thumb behind the neck, fingertips arched so they don't touch other strings</li>
-                <li>Holding the pick between the thumb and the side of your index finger, with just the tip showing</li>
-                <li>Strumming from the wrist rather than the elbow</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>One minute of slow down-strums on the open strings, keeping a relaxed wrist and an even volume.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can strum for a minute without your shoulder tensing up or the pick slipping.</li></ul>
-              <p>In the app: <a class="app-link" href="lessons.html#pH">Lesson 2</a></p>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="pH" href="lessons.html#pH"><span class="num">1.2</span><span class="name">Holding the guitar and pick<small>Posture, thumb position, pick grip and the strumming motion</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="1-3">
-            <summary><span class="num">1.3</span><span class="name">Reading tab and chord diagrams<small>The simple way guitarists write music down</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Tab: six lines are the strings, numbers are frets, and you read left to right</li>
-                <li>Chord diagrams: dots are fingers, <strong>O</strong> means play the string open, <strong>X</strong> means don't play it</li>
-              </ul>
-<pre class="tab">e|-----------0-----|
-B|---------0---1---|
-G|-------0-------2-|
-D|-----2-----------|
-A|---2-------------|
-E|-0---------------|</pre>
-              <h4>Practice</h4>
-              <ul><li>Play the line above slowly, then make up your own four-note line and write it in tab.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can play any short tab without asking which string is which.</li></ul>
-              <p>In the app: <a class="app-link" href="lessons.html#p2">Lesson 3</a></p>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="p2" href="lessons.html#p2"><span class="num">1.3</span><span class="name">Reading tab and chord diagrams<small>The simple way guitarists write music down</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="1-4">
-            <summary><span class="num">1.4</span><span class="name">Em and G, and your first chord changes<small>Two chords and the one-minute challenge</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li><strong>Em</strong> (two fingers) and <strong>G</strong></li>
-                <li>Moving all your fingers to the next chord at once, rather than one at a time</li>
-                <li>Keeping a finger in place when two chords share it</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>The one-minute challenge: count your clean Em → G switches in 60 seconds, write the number down and try to beat it tomorrow.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can make 30 or more clean changes in a minute.</li></ul>
-              <p>In the app: <a class="app-link" href="lessons.html#p3">Lessons 4–5</a></p>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="p3" href="lessons.html#p3"><span class="num">1.4</span><span class="name">Em and G, and your first chord changes<small>Two chords and the one-minute challenge</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="1-5">
-            <summary><span class="num">1.5</span><span class="name">Your first song and the down-up strum<small>Chord charts, counting to four and never stopping</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Reading a chord chart, where each slash is one beat</li>
-                <li>Counting "1 &amp; 2 &amp; 3 &amp; 4 &amp;": down on the numbers, up on the "&amp;"</li>
-                <li>Keeping your hand swinging even when you don't hit the strings</li>
-                <li>The pattern behind countless songs: <strong>D · D U · U D U</strong></li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Em and G with the app's band, four beats per chord, at slow speed and then medium.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can play the Em–G song all the way through without stopping, even if a change is messy.</li></ul>
-              <p>In the app: <a class="app-link" href="lessons.html#p5">Lessons 6–7</a></p>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="p5" href="lessons.html#p5"><span class="num">1.5</span><span class="name">Your first song and the down-up strum<small>Chord charts, counting to four and never stopping</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="1-6">
-            <summary><span class="num">1.6</span><span class="name">Your first notes and the five-note scale<small>Single notes, the minor pentatonic scale and the home note</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Playing single notes cleanly, one finger per fret</li>
-                <li>The A minor pentatonic "box" at the 5th fret, the shape behind most rock and blues solos</li>
-                <li>Ending phrases on the home note (A) so they sound finished</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Three minutes of the scale up and down with a metronome at 60, then make up short tunes over the backing track.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can play the box up and down from memory with no wrong notes.</li></ul>
-              <p>In the app: <a class="app-link" href="lessons.html#p6">Lessons 8–10</a></p>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="p6" href="lessons.html#p6"><span class="num">1.6</span><span class="name">Your first notes and the five-note scale<small>Single notes, the minor pentatonic scale and the home note</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="1-7">
-            <summary><span class="num">1.7</span><span class="name">The open chords<small>C, D, A, Am, E, Dm, plus major versus minor</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Six new chords. Together with Em and G, these are the nine open chords most songs use.</li>
-                <li>The difference by ear: major chords sound bright, minor chords sound darker</li>
-                <li>Easy pairs first: Am ↔ C, E ↔ Am, D ↔ G, A ↔ D</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Do the one-minute challenge with a different pair each day.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can play all nine chords from memory, with every string ringing clearly.</li></ul>
-              <p>In the app: <a class="app-link" href="lessons.html#p9">Lesson 11</a></p>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="p9" href="lessons.html#p9"><span class="num">1.7</span><span class="name">The open chords<small>C, D, A, Am, E, Dm, plus major versus minor</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="1-8">
-            <summary><span class="num">1.8</span><span class="name">Four-chord songs<small>C–G–Am–F family progressions, and changing chords in time</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>The progressions behind hundreds of songs: <strong>G–D–Em–C</strong> and <strong>C–G–Am–F</strong> (an easy Fmaj7 for now)</li>
-                <li>The trick that makes changes sound smooth: lift your fingers on the last up-strum ("4 &amp;") so you land on time</li>
-                <li>Playing songs from start to finish with the app's jam room</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Two songs from the song list below, every day, from start to finish.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can play three songs through at about 75 beats per minute without stopping.</li></ul>
-              <p>In the app: <a class="app-link" href="lessons.html#p10">Lesson 12 and the jam room</a></p>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="p10" href="lessons.html#p10"><span class="num">1.8</span><span class="name">Four-chord songs<small>C–G–Am–F family progressions, and changing chords in time</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
         </div>
 
         <div class="side-cards">
@@ -420,157 +294,21 @@ E|-0---------------|</pre>
         </div>
 
         <div class="lessons">
-          <details class="lesson" data-id="2-1">
-            <summary><span class="num">2.1</span><span class="name">Power chords<small>Two-note shapes that move anywhere on the neck</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>The power chord shape with its root on the 6th string and on the 5th string</li>
-                <li>Naming them by the root note, such as G5 at the 3rd fret and A5 at the 5th</li>
-                <li>Muting unused strings with the underside of your first finger</li>
-              </ul>
-<pre class="tab">   G5    A5    C5    D5
-D|-5-----7-----5-----7---|
-A|-5-----7-----3-----5---|
-E|-3-----5---------------|</pre>
-              <h4>Practice</h4>
-              <ul><li>Move the shape along the neck with a metronome, changing on every beat.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can play a rock progression with power chords and no ringing open strings.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L2-1" href="lessons.html#L2-1"><span class="num">2.1</span><span class="name">Power chords<small>Two-note shapes that move anywhere on the neck</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="2-2">
-            <summary><span class="num">2.2</span><span class="name">Palm muting and driving eighth notes<small>The chug behind rock rhythm guitar</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Resting the side of your picking hand lightly on the strings right at the bridge</li>
-                <li>Steady down-picked eighth notes</li>
-                <li>Accents: switching between muted and open strums to build energy</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Two minutes of muted eighths on E5 at 80, then 100, then 120 beats per minute.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can keep even eighths for a full minute at 110 beats per minute.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L2-2" href="lessons.html#L2-2"><span class="num">2.2</span><span class="name">Palm muting and driving eighth notes<small>The chug behind rock rhythm guitar</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="2-3">
-            <summary><span class="num">2.3</span><span class="name">The 12-bar blues<small>The shuffle rhythm and the form behind blues, rock and roll and more</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>The 12-bar form in A: four bars of A, two of D, two of A, then E, D, A, E</li>
-                <li>The classic shuffle riff, rocking between the 5th and 6th of each chord</li>
-                <li>The shuffle (swing) feel: long-short, long-short</li>
-              </ul>
-<pre class="tab">   A5 shuffle (repeat)
-D|-2-2-4-4-2-2-4-4-|
-A|-0-0-0-0-0-0-0-0-|</pre>
-              <h4>Practice</h4>
-              <ul><li>Play three choruses (36 bars) over a blues backing track without losing your place.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You always know which bar you're on, and you change chords without looking.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L2-3" href="lessons.html#L2-3"><span class="num">2.3</span><span class="name">The 12-bar blues<small>The shuffle rhythm and the form behind blues, rock and roll and more</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="2-4">
-            <summary><span class="num">2.4</span><span class="name">Reading rhythm<small>Quarters, eighths, sixteenths, rests and ties</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>The counts: "1 2 3 4", "1 &amp; 2 &amp;", and "1 e &amp; a"</li>
-                <li>Rests (silence that still counts as time) and ties (holding a note over the beat)</li>
-                <li>Clapping a rhythm before you play it</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Clap, then strum, one written rhythm a day on a single chord.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can read a one-line rhythm and play it correctly the first time at a slow tempo.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L2-4" href="lessons.html#L2-4"><span class="num">2.4</span><span class="name">Reading rhythm<small>Quarters, eighths, sixteenths, rests and ties</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="2-5">
-            <summary><span class="num">2.5</span><span class="name">Hammer-ons, pull-offs and slides<small>Making notes flow together</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Hammer-on (h): pick one note, then slam a finger down to sound the next</li>
-                <li>Pull-off (p): flick the finger off sideways to sound the lower note</li>
-                <li>Slide (/ or \): keep pressure on while you glide to a new fret</li>
-              </ul>
-<pre class="tab">G|-5h7-7p5-----5/7-7\5-|
-D|---------7-----------|</pre>
-              <h4>Practice</h4>
-              <ul><li>Go through the pentatonic box using only hammer-ons on the way up and pull-offs on the way down.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>Hammered and pulled notes are as loud as the picked ones.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L2-5" href="lessons.html#L2-5"><span class="num">2.5</span><span class="name">Hammer-ons, pull-offs and slides<small>Making notes flow together</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="2-6">
-            <summary><span class="num">2.6</span><span class="name">Bends, vibrato and your first solo<small>Making the guitar sing</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Whole-step bends on the G and B strings, using three fingers together and pushing with your wrist</li>
-                <li>Bending in tune: check that the bent note matches the note two frets up</li>
-                <li>Vibrato: small, even, repeated bends</li>
-                <li>Building a 12-bar solo from short licks with space between them</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Check ten bends a day against the target note. Improvise over a blues track for five minutes.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can improvise a full 12-bar solo with bends that land in tune.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L2-6" href="lessons.html#L2-6"><span class="num">2.6</span><span class="name">Bends, vibrato and your first solo<small>Making the guitar sing</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="2-7">
-            <summary><span class="num">2.7</span><span class="name">Fingerpicking<small>Playing the strings one at a time with your fingers</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Finger assignments: the thumb plays the bass strings, and the index, middle and ring fingers play the G, B and high E strings</li>
-                <li>Picking each chord one string at a time (arpeggios)</li>
-                <li>An alternating thumb bass, the starting point of Travis picking</li>
-              </ul>
-<pre class="tab">   C
-e|-------0-------0-|
-B|---1-------1-----|
-G|-----0-------0---|
-D|-----------------|
-A|-3-------3-------|</pre>
-              <h4>Practice</h4>
-              <ul><li>Five minutes of fingerpicking a C–Am–F–G loop.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can fingerpick a whole song with a steady thumb that never stops.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L2-7" href="lessons.html#L2-7"><span class="num">2.7</span><span class="name">Fingerpicking<small>Playing the strings one at a time with your fingers</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="2-8">
-            <summary><span class="num">2.8</span><span class="name">The F chord, capo and colour chords<small>Your first barre, plus sus and add chords</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>The small F barre on the top four strings, as a step toward full barre chords</li>
-                <li>Using a capo to play songs in a different key with the shapes you already know</li>
-                <li>Colour chords: Dsus2, Dsus4, Asus2, Cadd9, used to add movement to strums</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Do the one-minute challenge: C ↔ F.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>F rings clearly and you can change C → F in time.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L2-8" href="lessons.html#L2-8"><span class="num">2.8</span><span class="name">The F chord, capo and colour chords<small>Your first barre, plus sus and add chords</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
         </div>
 
         <div class="side-cards">
@@ -622,144 +360,21 @@ A|-3-------3-------|</pre>
         </div>
 
         <div class="lessons">
-          <details class="lesson" data-id="3-1">
-            <summary><span class="num">3.1</span><span class="name">E-shape barre chords<small>Root on the 6th string: major, minor and 7</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>The full barre: your first finger acts as a capo, with the E shape played by the other fingers</li>
-                <li>Major, minor and dominant 7 versions</li>
-                <li>Using your arm's weight to press, rather than squeezing with your thumb</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Slide F → G → A along the neck. Then play the minor versions.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>All six strings ring, and you can hold the chord for four bars without pain.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L3-1" href="lessons.html#L3-1"><span class="num">3.1</span><span class="name">E-shape barre chords<small>Root on the 6th string: major, minor and 7</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="3-2">
-            <summary><span class="num">3.2</span><span class="name">A-shape barre chords<small>Root on the 5th string, so you can play any chord in two places</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>The A-shape major (with a small ring-finger barre) and minor</li>
-                <li>Finding any chord with its root on the 6th or 5th string</li>
-                <li>Choosing the closest shape so you barely have to move</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Play I–IV–V progressions in five keys, using only barre chords.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can play any major or minor chord in two places within two seconds.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L3-2" href="lessons.html#L3-2"><span class="num">3.2</span><span class="name">A-shape barre chords<small>Root on the 5th string, so you can play any chord in two places</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="3-3">
-            <summary><span class="num">3.3</span><span class="name">Notes on the neck<small>Learning the low E and A strings, and octave shapes</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>The musical alphabet and where the half steps fall: B–C and E–F have no sharp between them</li>
-                <li>Landmark frets: 3, 5, 7, 12</li>
-                <li>Octave shapes that copy any note to another string</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Daily drill: pick a random note and find it on every string within ten seconds.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can name any note on the 6th and 5th strings instantly.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L3-3" href="lessons.html#L3-3"><span class="num">3.3</span><span class="name">Notes on the neck<small>Learning the low E and A strings, and octave shapes</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="3-4">
-            <summary><span class="num">3.4</span><span class="name">Keys and the major scale<small>Why songs use the chords they do, and the number system</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>The major scale pattern: whole, whole, half, whole, whole, whole, half</li>
-                <li>The chords in a key: I ii iii IV V vi vii°. In G that's G, Am, Bm, C, D, Em, F#°.</li>
-                <li>The Nashville number system: "1–5–6–4" works in any key</li>
-                <li>Finding the key of a song by ear and from its chords</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Write out the chords in the keys of C, G, D, A and E. Move one known song into a new key.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can move any song into a new key without writing it down.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L3-4" href="lessons.html#L3-4"><span class="num">3.4</span><span class="name">Keys and the major scale<small>Why songs use the chords they do, and the number system</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="3-5">
-            <summary><span class="num">3.5</span><span class="name">All five pentatonic positions<small>Connecting the scale across the whole neck, plus the blues scale</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Positions 1–5 of minor pentatonic, and how each one overlaps the next</li>
-                <li>Sliding between positions on a single string</li>
-                <li>The blues scale: pentatonic plus the ♭5 "blue note"</li>
-                <li>Major pentatonic is the same shapes, starting from a different root</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Learn one new position a week. Then improvise while moving through all five over one backing track.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can solo from the nut to the 17th fret without getting lost.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L3-5" href="lessons.html#L3-5"><span class="num">3.5</span><span class="name">All five pentatonic positions<small>Connecting the scale across the whole neck, plus the blues scale</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="3-6">
-            <summary><span class="num">3.6</span><span class="name">Solos that sound like music<small>Phrasing, space and targeting the chord</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Call and response: play a phrase, then answer it</li>
-                <li>Using space: rests are part of the solo</li>
-                <li>Landing on the root or third of the current chord when the chord changes</li>
-                <li>Repeating and developing one idea instead of playing fifty</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Solo with a limit: one string only, or three notes only, or one lick played five different ways.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>A recording of your solo has a beginning, a middle and an end.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L3-6" href="lessons.html#L3-6"><span class="num">3.6</span><span class="name">Solos that sound like music<small>Phrasing, space and targeting the chord</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="3-7">
-            <summary><span class="num">3.7</span><span class="name">Sixteenth-note strumming and syncopation<small>Groove, muted chucks and off-beat accents</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Keeping your hand moving in sixteenths, "1 e &amp; a", and choosing which strokes hit the strings</li>
-                <li>Percussive "chucks": hitting the strings while your fretting hand mutes them</li>
-                <li>Accenting the off-beats to create groove</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Play one syncopated pattern a day with a drum loop and record it. Check that it locks with the drums.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can copy a strum pattern from a recording by ear.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L3-7" href="lessons.html#L3-7"><span class="num">3.7</span><span class="name">Sixteenth-note strumming and syncopation<small>Groove, muted chucks and off-beat accents</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="3-8">
-            <summary><span class="num">3.8</span><span class="name">Seventh chords<small>Dominant 7, major 7 and minor 7, open and barre</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>How each one sounds: bluesy (7), dreamy (maj7), smooth (m7)</li>
-                <li>Open shapes (A7, E7, D7, Cmaj7, Am7) and barre versions with the E and A shapes</li>
-                <li>Swapping 7th chords into songs you know to change their colour</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Play a 12-bar blues with only 7th chords, then a slow song with maj7 and m7.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can hear the difference between the three types without looking.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L3-8" href="lessons.html#L3-8"><span class="num">3.8</span><span class="name">Seventh chords<small>Dominant 7, major 7 and minor 7, open and barre</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
         </div>
 
         <div class="side-cards">
@@ -811,145 +426,21 @@ A|-3-------3-------|</pre>
         </div>
 
         <div class="lessons">
-          <details class="lesson" data-id="4-1">
-            <summary><span class="num">4.1</span><span class="name">The CAGED system<small>Five chord shapes that map the entire neck</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>How the C, A, G, E and D shapes link up the neck for any chord</li>
-                <li>Playing one chord, such as G, in all five places</li>
-                <li>Linking each CAGED shape to its pentatonic position</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Each day, pick one chord and play it in all five shapes, going up and then down the neck.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can play any major chord in five positions.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L4-1" href="lessons.html#L4-1"><span class="num">4.1</span><span class="name">The CAGED system<small>Five chord shapes that map the entire neck</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="4-2">
-            <summary><span class="num">4.2</span><span class="name">Triads and inversions<small>Small three-note chords for rhythm parts that sit well in a band</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Major and minor triads on the top three strings, in all three inversions</li>
-                <li>Then the same on the middle string sets</li>
-                <li>Voice leading: moving to the nearest note of the next chord</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Play a I–IV–V progression on the top three strings without moving more than two frets.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can play a second guitar part that doesn't clash with the first.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L4-2" href="lessons.html#L4-2"><span class="num">4.2</span><span class="name">Triads and inversions<small>Small three-note chords for rhythm parts that sit well in a band</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="4-3">
-            <summary><span class="num">4.3</span><span class="name">Arpeggios and chord-tone soloing<small>Following the chords instead of only the key</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Major, minor and dominant 7 arpeggios, built from the CAGED shapes</li>
-                <li>Aiming for the 3rd of each chord as it arrives</li>
-                <li>Mixing pentatonic licks with arpeggio notes</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Solo over a slow I–IV–V and land on the 3rd at every chord change.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>Someone listening can hear the chord changes in your solo alone.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L4-3" href="lessons.html#L4-3"><span class="num">4.3</span><span class="name">Arpeggios and chord-tone soloing<small>Following the chords instead of only the key</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="4-4">
-            <summary><span class="num">4.4</span><span class="name">Modes you'll actually use<small>Dorian, Mixolydian and the major and minor scales</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Each mode as a change to a scale you already know, not as a new shape</li>
-                <li><strong>Dorian:</strong> minor with a bright 6th, heard in funk, soul and Santana-style playing</li>
-                <li><strong>Mixolydian:</strong> major with a ♭7, heard in classic rock, blues and country</li>
-                <li>Choosing a mode from the chords: for a vamp of Am7 to D, play A Dorian</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Improvise over one-chord vamps, switching between minor, Dorian and Mixolydian.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can hear which mode fits a backing track and use it straight away.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L4-4" href="lessons.html#L4-4"><span class="num">4.4</span><span class="name">Modes you'll actually use<small>Dorian, Mixolydian and the major and minor scales</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="4-5">
-            <summary><span class="num">4.5</span><span class="name">Picking technique and speed<small>Alternate picking, economy picking and string skipping</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Strict alternate picking, and how to change strings cleanly</li>
-                <li>Economy picking: sweeping the pick through when you change string</li>
-                <li>The speed ladder: play clean at a tempo, raise it by 4 bpm, and go back down when it gets sloppy</li>
-                <li>Muting with both hands so fast lines stay clean</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Ten minutes of speed ladder on scales and one lick. Log your clean top tempo every day.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can play sixteenth notes cleanly at 100 bpm or faster.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L4-5" href="lessons.html#L4-5"><span class="num">4.5</span><span class="name">Picking technique and speed<small>Alternate picking, economy picking and string skipping</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="4-6">
-            <summary><span class="num">4.6</span><span class="name">Funk, R&amp;B and reggae rhythm<small>Ninth chords, scratching and the skank</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>The E9 "funk chord" and small partial chords high on the neck</li>
-                <li>Sixteenth-note scratching, with a constant hand motion and muted strings</li>
-                <li>Double-stops and R&amp;B fills</li>
-                <li>The reggae skank: short chords on the off-beats</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Lock in with a drum loop for five minutes, and stay on one chord the whole time.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can groove on one chord for a full song and it still sounds good.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L4-6" href="lessons.html#L4-6"><span class="num">4.6</span><span class="name">Funk, R&amp;B and reggae rhythm<small>Ninth chords, scratching and the skank</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="4-7">
-            <summary><span class="num">4.7</span><span class="name">Ear training and transcription<small>Learning songs and solos without tab</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Recognizing intervals with song references, such as the first two notes of a familiar tune</li>
-                <li>Finding the key first, then the bass notes, then the chords</li>
-                <li>Slowing a recording down without changing its pitch, and looping short sections</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Fifteen minutes a day transcribing. Start with bass lines and simple riffs.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You've learned a whole solo by ear and can play it along with the recording.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L4-7" href="lessons.html#L4-7"><span class="num">4.7</span><span class="name">Ear training and transcription<small>Learning songs and solos without tab</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="4-8">
-            <summary><span class="num">4.8</span><span class="name">Songwriting and arranging<small>Riffs, progressions and song form</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Song sections: verse, chorus, bridge, and how to make each one feel different</li>
-                <li>Borrowed chords for surprise, such as ♭VII and iv in a major key</li>
-                <li>Writing riffs from scale fragments and rhythm ideas</li>
-                <li>Arranging: who plays where, and leaving room for the singer</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Write one riff a day and record it on your phone. Finish one full song this level.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You have one original song recorded from start to finish.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L4-8" href="lessons.html#L4-8"><span class="num">4.8</span><span class="name">Songwriting and arranging<small>Riffs, progressions and song form</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
         </div>
 
         <div class="side-cards">
@@ -1001,147 +492,21 @@ A|-3-------3-------|</pre>
         </div>
 
         <div class="lessons">
-          <details class="lesson" data-id="5-1">
-            <summary><span class="num">5.1</span><span class="name">Extended and altered chords<small>9ths, 11ths, 13ths, m7♭5, dim7 and drop-2 voicings</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>How extensions are built by stacking thirds past the octave</li>
-                <li>Which notes to drop so the chord fits under four fingers: usually the 5th, and sometimes the root</li>
-                <li>Drop-2 voicings on the middle four strings</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Play a known song again using only extended voicings.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can read a jazz or neo-soul chord chart and voice every chord.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L5-1" href="lessons.html#L5-1"><span class="num">5.1</span><span class="name">Extended and altered chords<small>9ths, 11ths, 13ths, m7♭5, dim7 and drop-2 voicings</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="5-2">
-            <summary><span class="num">5.2</span><span class="name">The ii–V–I<small>The most common progression in jazz, in major and minor keys</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Major ii–V–I (Dm7–G7–Cmaj7) and minor ii–V–i (Bm7♭5–E7–Am)</li>
-                <li>Comping: rhythmic chord accompaniment that leaves space for the soloist</li>
-                <li>Walking bass lines with chords on top, played on one guitar</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Play ii–V–Is around the cycle of fourths, in two positions.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can comp through a jazz standard's chord changes at a medium tempo.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L5-2" href="lessons.html#L5-2"><span class="num">5.2</span><span class="name">The ii–V–I<small>The most common progression in jazz, in major and minor keys</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="5-3">
-            <summary><span class="num">5.3</span><span class="name">Soloing over changes<small>Melodic and harmonic minor, and creating tension and release</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Harmonic minor over the V7 chord in minor keys</li>
-                <li>Melodic minor and the "altered" sound over V7</li>
-                <li>Chromatic approach notes and enclosures (circling a target note)</li>
-                <li>Guide-tone lines: connecting the 3rds and 7ths through the changes</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Write a guide-tone melody over a standard, then improvise around it.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>Your solos clearly follow the chord changes without leaning on a backing track to carry the harmony.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L5-3" href="lessons.html#L5-3"><span class="num">5.3</span><span class="name">Soloing over changes<small>Melodic and harmonic minor, and creating tension and release</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="5-4">
-            <summary><span class="num">5.4</span><span class="name">Advanced techniques<small>Legato, tapping, sweep picking and hybrid picking</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Legato runs: three notes per string with hammer-ons and pull-offs</li>
-                <li>Two-hand tapping</li>
-                <li>Sweep-picked arpeggios across three and then five strings</li>
-                <li>Hybrid picking (pick plus fingers) for country and chicken-pickin' sounds</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>One technique per week, ten minutes a day, on the speed ladder.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can use each technique musically in a solo, not only as an exercise.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L5-4" href="lessons.html#L5-4"><span class="num">5.4</span><span class="name">Advanced techniques<small>Legato, tapping, sweep picking and hybrid picking</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="5-5">
-            <summary><span class="num">5.5</span><span class="name">Advanced rhythm and feel<small>Odd meters, swing, half-time and playing ahead of or behind the beat</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Counting and grooving in 5/4, 7/8 and 6/8</li>
-                <li>Swing versus straight time, and moving smoothly between them</li>
-                <li>Placing notes slightly ahead of or behind the beat to change the feel</li>
-                <li>Simple polyrhythms: three over two, four over three</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Set the metronome to click only on beats 2 and 4, then only once per bar.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can keep solid time with a click that plays only once every two bars.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L5-5" href="lessons.html#L5-5"><span class="num">5.5</span><span class="name">Advanced rhythm and feel<small>Odd meters, swing, half-time and playing ahead of or behind the beat</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="5-6">
-            <summary><span class="num">5.6</span><span class="name">Solo guitar arranging<small>Melody, bass and chords together, plus alternate tunings</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Putting the melody on top and the bass on the bottom, with chord fragments filling the middle</li>
-                <li>Choosing a key that suits the guitar, so open strings help you</li>
-                <li>Alternate tunings: DADGAD, open D and open G</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Arrange one traditional song, such as Amazing Grace, for solo guitar.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can play a complete solo arrangement that needs no singer.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L5-6" href="lessons.html#L5-6"><span class="num">5.6</span><span class="name">Solo guitar arranging<small>Melody, bass and chords together, plus alternate tunings</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="5-7">
-            <summary><span class="num">5.7</span><span class="name">Recording at home<small>Interface, mics, amp sims, levels and a clean mix</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Signal chain: guitar → audio interface → DAW (recording software), plus monitoring without delay</li>
-                <li>Gain staging: recording peaks around −12 dB, never clipping</li>
-                <li>Mic placement for acoustic guitar (around the 12th fret) and for an amp (near the edge of the speaker cone)</li>
-                <li>Recording direct (DI) and re-amping with amp simulators</li>
-                <li>Double-tracking, panning and basic EQ and compression</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Record a full song: rhythm parts doubled and panned, a lead part, and a simple mix.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You can produce a clean demo you'd be happy to share.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L5-7" href="lessons.html#L5-7"><span class="num">5.7</span><span class="name">Recording at home<small>Interface, mics, amp sims, levels and a clean mix</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
 
-          <details class="lesson" data-id="5-8">
-            <summary><span class="num">5.8</span><span class="name">Performance and personal style<small>Playing for people and sounding like yourself</small></span><span class="tick">✓ Done</span></summary>
-            <div class="lesson-body">
-              <h4>You'll learn</h4>
-              <ul>
-                <li>Building a set list: pacing, keys and transitions</li>
-                <li>Handling nerves: preparing so well you could play in your sleep, and recovering from mistakes without stopping</li>
-                <li>Gear for live playing: a simple, reliable signal chain</li>
-                <li>Finding your style: copy three players you love, then combine them</li>
-              </ul>
-              <h4>Practice</h4>
-              <ul><li>Run your full set once a week as a mock gig, standing up, without stopping.</li></ul>
-              <h4>You're ready when</h4>
-              <ul><li>You've played a 20-minute set for an audience, whether at an open mic, on a livestream or for friends.</li></ul>
-              <label class="done-check"><input type="checkbox"> I can do this</label>
-            </div>
-          </details>
+          <a class="lesson lesson-link" data-id="L5-8" href="lessons.html#L5-8"><span class="num">5.8</span><span class="name">Performance and personal style<small>Playing for people and sounding like yourself</small></span><span class="tick">✓ Done</span><span class="go" aria-hidden="true">Open →</span></a>
         </div>
 
         <div class="side-cards">
@@ -1191,7 +556,7 @@ A|-3-------3-------|</pre>
       <div class="wrap">
         <div class="cta-band strings">
           <h2>Start at the beginning, <em>or start where you are.</em></h2>
-          <p>New to guitar? Start with the free lesson app. It's Level 1, and it sends you back here for Level 2 when you're ready. Already playing? Go to the first level whose checklist you can't finish yet. If you'd like a teacher along the way, Pat teaches every level one-on-one.</p>
+          <p>New to guitar? Start at Lesson 1 in the lesson app. All five levels are in it. Already playing? Go to the first level whose checklist you can't finish yet. If you'd like a teacher along the way, Pat teaches every level one-on-one.</p>
           <div class="hero-actions">
             <a class="btn btn-primary btn-lg" href="lessons.html">Start Level 1</a>
             <a class="text-link" href="index.html#lessons-with-pat">Prefer a teacher? Lessons with Pat</a>
@@ -1237,34 +602,19 @@ A|-3-------3-------|</pre>
   <script src="assets/js/site.js?v=4" defer></script>
   <script>
     (function () {
-      const KEY = "mgl-course-done";
-      let done = {};
-      try { done = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { done = {}; }
-
-      function save() { try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {} }
-
-      function refresh() {
-        document.querySelectorAll(".level").forEach((level) => {
-          const count = level.querySelectorAll(".lesson.is-done").length;
-          const out = level.querySelector("[data-count]");
-          if (out) out.textContent = count;
-        });
-      }
-
-      document.querySelectorAll(".lesson").forEach((lesson) => {
-        const id = lesson.dataset.id;
-        const box = lesson.querySelector(".done-check input");
-        if (!box) return;
-        box.checked = !!done[id];
-        lesson.classList.toggle("is-done", box.checked);
-        box.addEventListener("change", () => {
-          if (box.checked) done[id] = true; else delete done[id];
-          lesson.classList.toggle("is-done", box.checked);
-          save();
-          refresh();
-        });
+      // Progress lives in the lesson app (localStorage "mgl-done"); show it here too.
+      let done = new Set();
+      try { done = new Set(JSON.parse(localStorage.getItem("mgl-done") || "[]")); } catch (e) {}
+      try {
+        const old = JSON.parse(localStorage.getItem("mgl-course-done") || "{}") || {};
+        Object.keys(old).forEach((k) => { if (/^[2-5]-\d$/.test(k)) done.add("L" + k); });
+      } catch (e) {}
+      document.querySelectorAll(".level").forEach((level) => {
+        const items = level.querySelectorAll(".lesson-link");
+        items.forEach((a) => a.classList.toggle("is-done", done.has(a.dataset.id)));
+        const out = level.querySelector("[data-count]");
+        if (out) out.textContent = level.querySelectorAll(".lesson-link.is-done").length;
       });
-      refresh();
 
       // Highlight the level you're reading in the sticky level bar.
       const links = [...document.querySelectorAll(".level-nav a")];

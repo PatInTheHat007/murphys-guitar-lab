@@ -117,6 +117,30 @@ dl.words dd{margin:.1rem 0 0;color:var(--muted)}
 .week div{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;text-align:center;padding:.3rem 0;font-size:.72rem;color:var(--muted)}
 .week div b{display:block;font:700 1rem Fraunces,serif;color:var(--text)}
 .week div.today{border-color:var(--accent-text)}
+/* Menu grouped by level; each level folds open */
+.nav-group{margin-top:.25rem}
+.nav-level{display:flex;width:100%;align-items:center;gap:.4rem;text-align:left;background:transparent;border:0;border-radius:10px;color:var(--accent-text);font:650 .7rem Outfit,sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:.55rem .6rem}
+.nav-level:hover{background:var(--surface)}
+.nav-level::before{content:"▸";display:inline-block;transition:transform .15s}
+.nav-group.open .nav-level::before{transform:rotate(90deg)}
+.nav-level small{margin-left:auto;color:var(--muted);letter-spacing:0;text-transform:none;font-weight:520;font-size:.72rem}
+.nav-items{display:none;flex-direction:column;gap:.1rem;padding-left:.4rem}
+.nav-group.open .nav-items{display:flex}
+.nav-m{display:none}
+/* Level overview pages */
+.chips{display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0}
+.chips span{background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:.25rem .75rem;font-size:.82rem;color:var(--muted)}
+.chips strong{color:var(--text)}
+.lesson-list{list-style:none;padding:0;display:grid;gap:.4rem;margin:.6rem 0 1rem}
+.page .lesson-list a{display:grid;grid-template-columns:2.6rem 1fr auto;gap:.6rem;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:.6rem .9rem;color:var(--text);text-decoration:none}
+.page .lesson-list a:hover{border-color:var(--accent-text)}
+.lesson-list .num{font:700 1rem Fraunces,serif;color:var(--accent-text)}
+.lesson-list small{display:block;color:var(--muted);font-size:.82rem}
+.lesson-list a::after{content:"→";color:var(--muted)}
+.lesson-list a.done::after{content:"✓";color:var(--good);font-weight:700}
+.qa.two{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+div.pat-btn{cursor:default}
+.locked-list li{color:var(--muted)}
 /* Help pages */
 .qa{display:grid;gap:.6rem;margin:1rem 0}
 .qa .card h3{font-size:1.05rem}
@@ -130,9 +154,13 @@ a.btn-link:hover{background:var(--accent-hover)}
   :root{--side:0px}
   .app{grid-template-columns:1fr}
   aside{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--border);padding-bottom:.8rem}
-  aside nav{flex-direction:row;overflow:auto}
-  aside .nav-sep{display:none}
-  aside button.nav{white-space:nowrap}
+  /* Phones: the menu folds away behind one button showing where you are. */
+  .warmup{flex-direction:column;gap:.2rem}
+  .nav-m{display:flex;width:100%;justify-content:space-between;align-items:center;margin-top:.7rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.6rem .8rem;text-align:left}
+  .nav-m span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  aside nav,aside .nav-sep,aside .more-link{display:none}
+  aside.menu-open nav{display:flex}
+  aside.menu-open .nav-sep,aside.menu-open .more-link{display:block}
   .hero{padding-right:110px}
   .pat-btn img{height:140px}
   .lab{left:0}
@@ -153,9 +181,11 @@ a.btn-link:hover{background:var(--accent-hover)}
 <div class="app">
 <aside>
   <a class="mark" href="index.html">Murphy's <span>Guitar Lab</span><em>Let's-a fret</em></a>
-  <nav id="nav"></nav>
-  <div class="nav-sep">Keep going</div>
-  <a href="course.html" style="display:block;padding:.45rem .6rem;color:var(--muted);font:520 .85rem Outfit,sans-serif;text-decoration:none">Full course (Levels 2–5) →</a>
+  <button class="nav-m" aria-expanded="false" aria-controls="nav" onclick="toggleMenu()"><span>Lessons: <strong id="navNow">Welcome</strong></span><span aria-hidden="true">▾</span></button>
+  <nav id="nav" aria-label="Lessons"></nav>
+  <div class="nav-sep">More</div>
+  <a class="more-link" href="course.html" style="padding:.45rem .6rem;color:var(--muted);font:520 .85rem Outfit,sans-serif;text-decoration:none">Course overview →</a>
+  <a class="more-link" href="index.html" style="padding:.45rem .6rem;color:var(--muted);font:520 .85rem Outfit,sans-serif;text-decoration:none">Home page →</a>
 </aside>
 <div>
 <section class="page on" id="p0"></section>
@@ -195,34 +225,72 @@ a.btn-link:hover{background:var(--accent-hover)}
   <span id="countVis" style="font-family:Fraunces,serif;font-size:1.35rem;color:var(--accent-text);min-width:1.8rem"></span>
   <span class="now" id="now">Slow 60</span>
 </div>
+<script src="assets/js/course-data.js?v=1"></script>
 <script>
-const PAGES=[["p0","Welcome"],["p1","1 · Meet your guitar"],["pH","2 · Holding it"],["p2","3 · Reading tab"],["p3","4 · First chord: Em"],["p4","5 · Changing chords"],["p5","6 · Your first song"],["pS","7 · Strumming up and down"],["p6","8 · First notes"],["p7","9 · The five-note scale"],["p8","10 · Ending on a home note"],["p9","11 · More chords"],["p10","12 · Jam room"],["pG","Finished? Next: Level 2"],["pX","Extra credit"],["pN","What's normal"],["pE","Gear and setup"],["pW","Word list"]];
-const NAV_SEPS={pG:"When you finish",pN:"Help"};
+// ---- Course lock --------------------------------------------------------------
+// Level 1 is free forever. Set LOCK_LEVELS_2_TO_5 to true to show an "Unlock the
+// full course" screen on Levels 2–5 instead of the lessons. Put your payment page
+// in UNLOCK_URL. Note: this only hides the lessons in the browser. A real paywall
+// also needs sign-in and a server check (assets/js/course-data.js is the file to protect).
+const LOCK_LEVELS_2_TO_5=false;
+const UNLOCK_URL="";
+function hasUnlocked(){try{return localStorage.getItem("mgl-unlocked")==="1";}catch(e){return false;}}
+
+// ---- Pages and the menu, grouped by level ----------------------------------------
+const COURSE=window.COURSE||[];
+const GROUPS=[
+  {key:"0",items:[["p0","Welcome"]]},
+  {key:"1",label:"Level 1 · Beginner",items:[["p1","1 · Meet your guitar"],["pH","2 · Holding it"],["p2","3 · Reading tab"],["p3","4 · First chord: Em"],["p4","5 · Changing chords"],["p5","6 · Your first song"],["pS","7 · Strumming up and down"],["p6","8 · First notes"],["p7","9 · The five-note scale"],["p8","10 · Ending on a home note"],["p9","11 · More chords"],["p10","12 · Jam room"],["pG","Level 1 checkpoint"]]},
+  ...COURSE.map(lv=>({key:String(lv.n),label:`Level ${lv.n} · ${lv.eyebrow.split("·").pop().trim()}`,
+    items:[["L"+lv.n,`Level ${lv.n} overview`],...lv.lessons.map(l=>[l.id,`${l.num} · ${l.name}`]),["L"+lv.n+"done",lv.checkpoint?`Level ${lv.n} checkpoint`:"Finish the course"]]})),
+  {key:"help",label:"Extras and help",items:[["pX","Extra credit"],["pN","What's normal"],["pE","Gear and setup"],["pW","Word list"]]}
+];
+const PAGES=GROUPS.flatMap(g=>g.items);
+const GROUP_OF={};GROUPS.forEach(g=>g.items.forEach(([id])=>GROUP_OF[id]=g.key));
+const LABEL_OF=Object.fromEntries(PAGES);
+function isLocked(id){return LOCK_LEVELS_2_TO_5&&+GROUP_OF[id]>=2&&!hasUnlocked();}
 
 // Progress ticks are a per-browser convenience; the page works without storage.
 function loadDone(){try{return new Set(JSON.parse(localStorage.getItem("mgl-done")||"[]"));}catch(e){return new Set();}}
 function saveDone(set){try{localStorage.setItem("mgl-done",JSON.stringify([...set]));}catch(e){}}
 let DONE=loadDone();
-function markNav(){document.querySelectorAll("aside button.nav").forEach(b=>b.classList.toggle("done",DONE.has(b.dataset.id)));}
+// Bring over ticks from the old course page (it saved "2-1", the app uses "L2-1").
+try{const old=JSON.parse(localStorage.getItem("mgl-course-done")||"{}")||{};let moved=false;Object.keys(old).forEach(k=>{if(/^[2-5]-\d$/.test(k)&&!DONE.has("L"+k)){DONE.add("L"+k);moved=true;}});if(moved)saveDone(DONE);}catch(e){}
+function markNav(){
+  document.querySelectorAll("aside button.nav, .lesson-list a[data-id]").forEach(b=>b.classList.toggle("done",DONE.has(b.dataset.id)));
+  GROUPS.forEach(g=>{const out=document.querySelector(`[data-gcount="${g.key}"]`);if(!out)return;
+    const ids=g.items.map(i=>i[0]).filter(id=>document.querySelector(`input[data-done="${id}"]`));
+    out.textContent=ids.length?`${ids.filter(id=>DONE.has(id)).length}/${ids.length}`:"";});
+}
 
-function show(id){stopAll(false);stopTuner();stopRec();try{localStorage.setItem("mgl-last",id);}catch(e){}try{history.replaceState(null,"","#"+id);}catch(e){}document.querySelectorAll(".page").forEach(p=>p.classList.toggle("on",p.id===id));document.querySelectorAll("aside button.nav").forEach(b=>b.classList.toggle("on",b.dataset.id===id));window.scrollTo(0,0);}
-document.getElementById("nav").innerHTML=PAGES.map(([id,l],i)=>(NAV_SEPS[id]?`<div class="nav-sep">${NAV_SEPS[id]}</div>`:"")+`<button class="nav ${i===0?"on":""}" data-id="${id}" onclick="show('${id}')">${l}</button>`).join("");
+function show(id){stopAll(false);stopTuner();stopRec();try{localStorage.setItem("mgl-last",id);}catch(e){}try{history.replaceState(null,"","#"+id);}catch(e){}document.querySelectorAll(".page").forEach(p=>p.classList.toggle("on",p.id===id));document.querySelectorAll("aside button.nav").forEach(b=>b.classList.toggle("on",b.dataset.id===id));
+  document.querySelectorAll(".nav-group").forEach(el=>toggleGroup(el.dataset.group,el.dataset.group===GROUP_OF[id]));
+  document.getElementById("navNow").textContent=LABEL_OF[id]||"";toggleMenu(false);window.scrollTo(0,0);}
+function toggleGroup(key,open){const el=document.querySelector(`.nav-group[data-group="${key}"]`);if(!el)return;const o=open??!el.classList.contains("open");el.classList.toggle("open",o);el.querySelector(".nav-level").setAttribute("aria-expanded",String(o));}
+function toggleMenu(open){const a=document.querySelector("aside"),o=open??!a.classList.contains("menu-open");a.classList.toggle("menu-open",o);document.querySelector(".nav-m").setAttribute("aria-expanded",String(o));}
+function navBtn([id,l]){return `<button class="nav" data-id="${id}" onclick="show('${id}')">${l}</button>`;}
+document.getElementById("nav").innerHTML=GROUPS.map(g=>g.label
+  ?`<div class="nav-group" data-group="${g.key}"><button class="nav-level" aria-expanded="false" onclick="toggleGroup('${g.key}')">${g.label}${LOCK_LEVELS_2_TO_5&&+g.key>=2&&!hasUnlocked()?" 🔒":""}<small data-gcount="${g.key}"></small></button><div class="nav-items">${g.items.map(navBtn).join("")}</div></div>`
+  :g.items.map(navBtn).join("")).join("");
 
-function pager(a,b){return `<div class="pager">${a?`<button onclick="show('${a}')">← Back</button>`:""}${b?`<button class="primary" onclick="show('${b}')">Next →</button>`:""}</div><p class="card-foot">Every day, 10 minutes: 2 min changing chords · 3 min the scale · 2 min strumming with a chart · 3 min playing a song.</p>`}
+const L1_PLAN="Every day, 10 minutes: 2 min changing chords · 3 min the scale · 2 min strumming with a chart · 3 min playing a song.";
+function pager(a,b,foot=L1_PLAN){return `<div class="pager">${a?`<button onclick="show('${a}')">← Back</button>`:""}${b?`<button class="primary" onclick="show('${b}')">Next →</button>`:""}</div><p class="card-foot">${foot}</p>`}
 function patHero(pose,line,title,body,pid,pocket){
+  const img=`<img src="${pose==="teach"?"assets/img/pat-teach.jpg":"assets/img/pat-wave.jpg"}" alt="Pat holding a Les Paul"/>`;
+  if(!pocket)return `<div class="hero"><div class="copy">${line?`<div class="bubble">${line}</div>`:""}<p class="eyebrow">${title}</p>${body}</div><div class="pat-btn" aria-hidden="true">${img}</div></div>`;
   return `<div class="hero"><div class="copy"><div class="bubble">${line}</div>
   <p class="eyebrow">${title}</p>${body}</div>
-  <button class="pat-btn" aria-label="Show Pat's tip" aria-controls="${pid}" onclick="document.getElementById('${pid}').classList.toggle('on')"><img src="${pose==="teach"?"assets/img/pat-teach.jpg":"assets/img/pat-wave.jpg"}" alt="Pat holding a Les Paul"/></button></div>
+  <button class="pat-btn" aria-label="Show Pat's tip" aria-controls="${pid}" onclick="document.getElementById('${pid}').classList.toggle('on')">${img}</button></div>
   <div class="pocket" id="${pid}"><p><strong>Pat's tip:</strong> ${pocket}</p></div>`;
 }
 function lesson(o){
-  return patHero(o.pose||"teach",(o.bubble||"Click me for a tip")+" →",o.eyebrow,`<h2>${o.title}</h2>${o.intro?`<p>${o.intro}</p>`:""}`,"pk"+o.id,o.tip)+
+  return patHero(o.pose||"teach",o.tip?(o.bubble||"Click me for a tip")+" →":(o.bubble||""),o.eyebrow,`<h2>${o.title}</h2>${o.intro?`<p>${o.intro}</p>`:""}`,"pk"+o.id,o.tip)+
   (WARMUP[o.id]?`<div class="warmup"><span class="tag">2-min warm-up</span><div>${WARMUP[o.id]}</div></div>`:"")+
   (o.learn?`<div class="learn"><strong>In this lesson you'll learn</strong><ul>${o.learn.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:"")+
   o.body+
   (REC[o.id]?recHTML(o.id,REC[o.id]):"")+
   (o.goal?`<label class="done-box"><input type="checkbox" data-done="${o.id}"/><span><strong>Tick this when:</strong> ${o.goal}</span></label>`:"")+
-  pager(o.prev,o.next);
+  pager(o.prev,o.next,o.foot);
 }
 // Start each lesson by reviewing an earlier one, so old skills don't fade.
 function back(id,label){return `<a href="#${id}" onclick="show('${id}');return false">${label}</a>`;}
@@ -301,7 +369,7 @@ E|--0--`;
 const BOX_GHOST=[{s:0,f:5,lab:"A",root:1},{s:0,f:8,lab:"C"},{s:1,f:5,lab:"D"},{s:1,f:7,lab:"E"},{s:2,f:5,lab:"G"},{s:2,f:7,lab:"A",root:1},{s:3,f:5,lab:"C"},{s:3,f:7,lab:"D"},{s:4,f:5,lab:"E"},{s:4,f:8,lab:"G"},{s:5,f:5,lab:"A",root:1},{s:5,f:8,lab:"C"}];
 
 document.getElementById("p0").innerHTML=patHero("wave","Hi, I'm Pat. Click me any time for a tip →","Welcome",
-`<h1>Let's-a fret.</h1><p>This lab takes you from "I just got a guitar" to playing along with a band — one small step per lesson. These 12 lessons are Level 1 of the <a href="course.html" style="color:var(--accent-text)">full course</a>. When you finish, you go on to Level 2.</p>`,"pk0",
+`<h1>Let's-a fret.</h1><p>This lab takes you from "I just got a guitar" to playing along with a band — one small step per lesson. All five levels are here, from your first chord to your own sound. Already play? Open a level in the menu and start at the first checkpoint you can't pass yet.</p>`,"pk0",
 `nobody sounds good in week one. Ten minutes every day beats an hour on Sunday.`)+
 `<h3>How to use the lab</h3>
 <ol class="steps">
@@ -606,8 +674,8 @@ ${chartHTML(["Em","G","Em","G"],"jamChart")}
 </div>`,
 goal:"you played along with a band. That's playing guitar!"});
 
-document.getElementById("pG").innerHTML=patHero("wave","You did it →","Level 1 done",
-`<h2>You finished the app. Next stop: Level 2.</h2><p>These 12 lessons are Level 1 of the full course. Level 2 is <strong>rock, blues and fingerpicking</strong>: power chords, the 12-bar blues, bends and your first fingerpicking patterns.</p>`,"pkG",
+document.getElementById("pG").innerHTML=patHero("wave","You did it →","Level 1 checkpoint",
+`<h2>Level 1 done? Next stop: Level 2.</h2><p>Level 2 is <strong>rock, blues and fingerpicking</strong>: power chords, the 12-bar blues, bends and your first fingerpicking patterns.</p>`,"pkG",
 `don't rush this checklist. Most people spend about two months on Level 1. Moving on before you're ready makes Level 2 feel much harder than it is.`)+
 `<h3>Before you move on, can you…</h3>
 <ul class="checklist">
@@ -617,7 +685,7 @@ document.getElementById("pG").innerHTML=patHero("wave","You did it →","Level 1
 <li>Play the ${back("p7","five-note scale")} up and down from memory?</li>
 </ul>
 <div class="plain"><strong>Not there yet?</strong> That's normal. Keep doing the 10-minute plan with lessons 5, 7 and 11 until you can do all four, then come back here.</div>
-<div class="row" style="margin-top:1.2rem"><a class="btn-link" href="course.html#level-2">Start Level 2 →</a><a class="hint" href="#pX" onclick="show('pX');return false">Or try the optional Extra credit first</a></div>`+pager("p10","pX");
+<div class="row" style="margin-top:1.2rem"><a class="btn-link" href="#L2" onclick="show('L2');return false">Start Level 2 →</a><a class="hint" href="#pX" onclick="show('pX');return false">Or try the optional Extra credit first</a></div>`+pager("p10","L2");
 
 document.getElementById("pN").innerHTML=patHero("teach","Read this when it gets hard →","Help",
 `<h2>What's normal when you're learning</h2><p>Almost everyone who quits guitar quits in the first few weeks, usually because of one of the things below. They happen to everyone, and they all get better.</p>`,"pkN",
@@ -722,7 +790,7 @@ ${pair("nkB",`B|-1-3-5-6-8-10-12-13-`)}
 <p>Slide the scale shape from lesson 9 down to the open strings and it becomes <strong>E minor pentatonic</strong>: E G A B D. Those notes all belong to the key of G, so this shape fits the G – C – D – G band. The darker dots are G.</p>
 <div class="pair"><div class="neck-wrap" id="nkEpent"></div><pre class="tab" id="nkEpentTab"></pre></div>
 <div class="row"><button class="primary" onclick="playEpent()">Hear the shape</button><button class="good" onclick="startBand('G C D G')">▶ Play it over G – C – D – G</button></div>
-</details>`+pager("pG","pN");
+</details>`+pager(null,"pN");
 
 document.getElementById("pW").innerHTML=`<p class="eyebrow">Word list</p><h2>Guitar words, in plain English</h2>
 <dl class="words">
@@ -746,6 +814,65 @@ document.getElementById("pW").innerHTML=`<p class="eyebrow">Word list</p><h2>Gui
 <dt>Strum</dt><dd>Brushing across several strings at once. A downstroke goes from the thick strings toward the thin ones.</dd>
 <dt>Tab</dt><dd>Guitar music written as six lines (strings) with numbers (frets). Thin string on top.</dd>
 </dl>`+pager("pE",null);
+
+// ---- Levels 2–5: built from assets/js/course-data.js -----------------------------------
+function lc(t){return t.charAt(0).toLowerCase()+t.slice(1);}
+function list(items){return `<ul>${items.map(i=>`<li>${i}</li>`).join("")}</ul>`;}
+// Practice helpers picked up from the wording: tempos and the one-minute challenge.
+function practiceTools(l){
+  const text=[...l.practice,...l.ready].join(" "),tools=[];
+  const bpms=[...new Set((text.match(/[\d, then]+(?= beats per minute)/g)||[]).flatMap(m=>m.match(/\d+/g)||[]))];
+  bpms.forEach(b=>tools.push(`<button class="good" onclick="metroAt(${b})">Metronome at ${b}</button>`));
+  const pair=text.match(/one-minute challenge: (\w+) ↔ (\w+)/);
+  if(pair)tools.push(`<button class="good" onclick="goPair('${pair[1]}','${pair[2]}')">Open the one-minute challenge (${pair[1]} ↔ ${pair[2]})</button>`);
+  if(l.id==="L2-3")tools.push(`<button class="good" onclick="startBand('12-bar in A')">▶ Play a 12-bar blues band in A</button>`);
+  return tools.length?`<div class="row">${tools.join("")}</div>`:"";
+}
+function lockedHTML(lv){
+  return patHero("wave","",`Level ${lv.n}`,`<h2>Levels 2–5 are part of the full course</h2><p>Level 1 is free forever. Unlock the full course to keep going with 32 more lessons, from power chords and the blues to jazz harmony and recording.</p>`,"",null)+
+  `<h3>In Level ${lv.n}: ${lv.title}</h3><ul class="locked-list">${lv.lessons.map(l=>`<li>${l.num} · ${l.name}</li>`).join("")}</ul>
+  <div class="row" style="margin-top:1rem">${UNLOCK_URL?`<a class="btn-link" href="${UNLOCK_URL}">Unlock the full course</a>`:`<span class="btn-link" aria-disabled="true" style="opacity:.6">Unlocking opens soon</span>`}<a class="hint" href="#pG" onclick="show('pG');return false">← Back to Level 1</a></div>`;
+}
+(function renderCourse(){
+  const before=document.getElementById("pX"),order=PAGES.map(p=>p[0]);
+  const prevOf=id=>order[order.indexOf(id)-1]||null;
+  COURSE.forEach((lv,li)=>{
+    const ids=GROUPS.find(g=>g.key===String(lv.n)).items.map(i=>i[0]);
+    ids.forEach(id=>{const sec=document.createElement("section");sec.className="page";sec.id=id;before.before(sec);});
+    if(isLocked("L"+lv.n)){ids.forEach(id=>document.getElementById(id).innerHTML=lockedHTML(lv));return;}
+    const foot=`Every day, ${lv.plan.time}: ${lv.plan.split}.`;
+    // Overview
+    document.getElementById("L"+lv.n).innerHTML=patHero(li%2?"wave":"teach","",lv.eyebrow,`<h2>${lv.title}</h2><p>${lv.lede}</p>`,"",null)+
+      `<div class="chips">${lv.meta.map(m=>`<span>${m}</span>`).join("")}</div>
+      <div class="card"><p class="eyebrow">Your ${lv.plan.time} a day</p><p>${lv.plan.split}. Same plan every day. Just slot in whatever lesson you're on.</p></div>
+      <h3>The ${lv.lessons.length} lessons</h3>
+      <ol class="lesson-list">${lv.lessons.map(l=>`<li><a href="#${l.id}" data-id="${l.id}" onclick="show('${l.id}');return false"><span class="num">${l.num}</span><span>${l.name}<small>${l.sub}</small></span></a></li>`).join("")}</ol>
+      <div class="qa two">${lv.cards.map(c=>`<div class="card"><h3>${c.title}</h3>${list(c.items)}</div>`).join("")}</div>`+
+      pager(prevOf("L"+lv.n),lv.lessons[0].id,foot);
+    // Lessons
+    lv.lessons.forEach((l,k)=>{
+      const prev=k?lv.lessons[k-1]:null;
+      WARMUP[l.id]=prev?`Practise ${back(prev.id,"Lesson "+prev.num)} again: ${lc(prev.practice[0])}`
+        :li===0?`Play along with a band in the ${back("p10","Jam room")} for two minutes.`
+        :(()=>{const p=COURSE[li-1].lessons.at(-1);return `Practise ${back(p.id,"Lesson "+p.num)} again: ${lc(p.practice[0])}`;})();
+      document.getElementById(l.id).innerHTML=lesson({id:l.id,eyebrow:`Level ${lv.n} · Lesson ${k+1} of ${lv.lessons.length}`,title:l.name,intro:l.sub,
+        learn:l.learn,foot,prev:prevOf(l.id),next:ids[ids.indexOf(l.id)+1],
+        body:(l.tab?`<pre class="tab">${l.tab}</pre>`:"")+
+          (l.id==="L2-3"?chartHTML(["A","A","A","A","D","D","A","A","E","D","A","E"]).replace("--n:12","--n:4"):"")+
+          `<h3>Practice</h3><ol class="steps">${l.practice.map(x=>`<li>${x}</li>`).join("")}</ol>`+practiceTools(l),
+        goal:l.ready.map(lc).join(" ")});
+    });
+    // Checkpoint
+    const cp=lv.checkpoint||{title:"You've finished the course when you've done these projects",items:lv.cards[0].items};
+    const nextLv=COURSE[li+1];
+    document.getElementById("L"+lv.n+"done").innerHTML=patHero("wave","",nextLv?`Level ${lv.n} checkpoint`:"Finish the course",`<h2>${cp.title}</h2>`,"",null)+
+      `<ul class="checklist">${cp.items.map(i=>`<li>${i}</li>`).join("")}</ul>`+
+      (nextLv?`<div class="plain"><strong>Not there yet?</strong> That's normal. Keep going with the ${lv.plan.time} daily plan and the lessons you find hardest, then come back here.</div>
+        <div class="row" style="margin-top:1.2rem"><a class="btn-link" href="#L${nextLv.n}" onclick="show('L${nextLv.n}');return false">Start Level ${nextLv.n} →</a></div>`
+        :`<div class="card"><h3>${lv.cards[1]?.title||"After this"}</h3>${list(lv.cards[1]?.items||[])}</div>`)+
+      pager(lv.lessons.at(-1).id,nextLv?"L"+nextLv.n:null,foot);
+  });
+})();
 
 // Done boxes: tick to mark a lesson done in the menu.
 document.querySelectorAll("input[data-done]").forEach(cb=>{cb.checked=DONE.has(cb.dataset.done);cb.addEventListener("change",()=>{cb.checked?DONE.add(cb.dataset.done):DONE.delete(cb.dataset.done);saveDone(DONE);markNav();});});
@@ -879,7 +1006,9 @@ i++;progTimer=setTimeout(step,bpmMs());})();});}
 
 // The one-minute challenge works on any chord pair. Em–G keeps the original
 // storage key so earlier best scores still show up.
-const PAIRS=[["Em","G"],["G","C"],["C","D"],["D","G"],["Am","C"]];
+const PAIRS=[["Em","G"],["G","C"],["C","D"],["D","G"],["Am","C"],["C","F"]];
+function goPair(a,b){const i=PAIRS.findIndex(p=>p[0]===a&&p[1]===b);show("p4");if(i>=0)setPair(i);document.getElementById("pairs").scrollIntoView({block:"center"});}
+function metroAt(n){document.getElementById("bpm").value=n;metroOn=false;toggleMetro();setNow("Metronome "+n);}
 let pairIx=0;try{pairIx=Math.min(PAIRS.length-1,Math.max(0,+localStorage.getItem("mgl-pair")||0));}catch(e){}
 function pairName(i=pairIx){return PAIRS[i].join(" ↔ ");}
 function bestKey(i=pairIx){return i===0?"mgl-best-changes":"mgl-best-changes:"+PAIRS[i].join("-");}
@@ -908,7 +1037,7 @@ function toggleMetro(){metroOn=!metroOn;document.getElementById("metroBtn").text
 function toggleDrone(){const a=ctx();if(droneOn){droneOsc.stop();droneOn=false;return;}droneOsc=a.createOscillator();const g=a.createGain();droneOsc.frequency.value=midiToFreq(48);g.gain.value=.04;droneOsc.connect(g);g.connect(a.destination);droneOsc.start();droneOn=true;}
 function stopAll(reset=true){metroOn=false;drillOn=false;document.getElementById("metroBtn").textContent="Metronome";if(metroTimer)clearInterval(metroTimer);if(progTimer)clearTimeout(progTimer);if(changeTimer)clearInterval(changeTimer);stopPlay();document.getElementById("countVis").textContent="";document.querySelectorAll(".slash.on").forEach(s=>s.classList.remove("on"));if(droneOn){try{droneOsc.stop();}catch(e){}droneOn=false;}if(reset)setNow("stopped");}
 
-const PROG={"Em":["Em"],"Am C":["Am","C"],"Em G Em G":["Em","G","Em","G"],"G C D G":["G","C","D","G"],"C Am F G":["C","Am","F","G"]};
+const PROG={"Em":["Em"],"Am C":["Am","C"],"Em G Em G":["Em","G","Em","G"],"G C D G":["G","C","D","G"],"C Am F G":["C","Am","F","G"],"12-bar in A":["A","A","A","A","D","D","A","A","E","D","A","E"]};
 function paintJam(a,b){const n=document.getElementById("jamNow"),x=document.getElementById("jamNext");if(!n||!n.closest(".page.on"))return;n.querySelector("h3").textContent=CHORDS[a].name;x.querySelector("h3").textContent=CHORDS[b].name;n.querySelector(".dia").replaceChildren(drawChord(CHORDS[a]));x.querySelector(".dia").replaceChildren(drawChord(CHORDS[b]));}
 function startJam(name){document.querySelectorAll("#jamChart h4").forEach((h,i)=>h.textContent=PROG[name][i]);startBand(name);}
 function startBand(name){const seq=PROG[name];countIn(()=>{let bar=0,beat=0;(function step(){const key=seq[bar%seq.length],nxt=seq[(bar+1)%seq.length],ch=CHORDS[key];lightBeat(bar,beat);if(beat===0){paintJam(key,nxt);kick();bass(ch.bass,.32);playChordRing(ch.midi);setNow("Play "+ch.name);}else if(beat===1){hat();bass(ch.bass+12,.12);}else if(beat===2){snare();hat();bass(ch.bass+7,.16);}else hat();beat++;if(beat>3){beat=0;bar++;}progTimer=setTimeout(step,bpmMs());})();});}
@@ -994,7 +1123,7 @@ function goTuner(){show("p1");document.getElementById("tunerCard").scrollIntoVie
 // Pick up where you left off.
 // Open the page named in the address (lessons.html#p4), otherwise pick up where you left off.
 function pageFromHash(){const h=location.hash.slice(1);return PAGES.some(p=>p[0]===h)?h:null;}
-(function(){let last=null;try{last=localStorage.getItem("mgl-last");}catch(e){}const want=pageFromHash()||(last&&last!=="p0"&&PAGES.some(p=>p[0]===last)?last:null);if(want)show(want);})();
+(function(){let last=null;try{last=localStorage.getItem("mgl-last");}catch(e){}const want=pageFromHash()||(last&&last!=="p0"&&PAGES.some(p=>p[0]===last)?last:null);show(want||"p0");})();
 window.addEventListener("hashchange",()=>{const h=pageFromHash();if(h&&!document.getElementById(h).classList.contains("on"))show(h);});
 </script>
 </body>
