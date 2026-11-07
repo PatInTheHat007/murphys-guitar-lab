@@ -86,6 +86,15 @@ table.grid th,table.grid td{border:1px solid var(--border);padding:.5rem;text-al
 .pitch.on{background:#1e3d2c}
 .jam-board{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
 .jam-board .card{text-align:center}
+.chord-lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.7rem;margin:.6rem 0}
+.chord-lib .card{margin:0;display:flex;flex-direction:column;gap:.4rem}
+.chord-lib .ch-top{display:flex;gap:.6rem;align-items:flex-start}
+.chord-lib pre.tab{margin:0;font-size:12px;padding:.45rem .6rem}
+.chord-lib h4{margin:0;font-size:1.05rem}
+.chord-lib ul{margin:.1rem 0 0;padding-left:1.1rem;font-size:.86rem}
+.chord-lib .ch-photo{border:1px dashed var(--border);border-radius:10px;padding:.5rem;text-align:center;font-size:.78rem;color:var(--muted)}
+.chord-lib .ch-photo img{width:100%;border-radius:8px;display:block}
+.chord-lib .ch-group{grid-column:1/-1;margin:.5rem 0 0}
 .big-count{font:700 3.4rem/1 Fraunces,serif;color:var(--accent-text);text-align:center;margin:.3rem 0}
 details.extra{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:.8rem 1rem;margin:.7rem 0}
 details.extra summary{cursor:pointer;font-weight:650;color:var(--text)}
@@ -469,7 +478,15 @@ E|------------`)}
 <button class="primary" onclick="playPath('nkTab',[{s:1,f:0,midi:45,l:'A string, open'},{s:1,f:2,midi:47,l:'A string, fret 2'},{s:1,f:3,midi:48,l:'A string, fret 3'}])">Hear it</button>
 <h3>When numbers stack up</h3>
 <p>Numbers written straight above each other are played <strong>at the same time</strong>. That's a <strong>chord</strong>. This one is Em — your first chord, coming next lesson:</p>
-<pre class="tab">${TAB_EM}</pre>`,
+<pre class="tab">${TAB_EM}</pre>
+<h3 id="chords">Every cowboy chord, as tab and as a finger picture</h3>
+<p>These are the <strong>cowboy chords</strong> (also called open chords) — the 15 shapes behind most campfire, country, folk and rock songs. You don't need them yet. Use this as your chart to look back at.</p>
+<p>Each card shows the same chord two ways:</p>
+<ul>
+<li><strong>The tab</strong> (thin string on top), read straight down: one number per string.</li>
+<li><strong>The finger picture</strong>: you're looking at the neck standing up, thick string on the left. The number in each dot is <strong>which finger</strong> to use (1 = pointer, 2 = middle, 3 = ring, 4 = pinky). <code>○</code> = play it open, <code>×</code> = don't play it.</li>
+</ul>
+<div class="chord-lib" id="chordLib"></div>`,
 goal:"you can look at a tab and say which string and fret each number means."});
 
 document.getElementById("p3").innerHTML=lesson({id:"p3",eyebrow:"Lesson 4",title:"Your first chord: Em",prev:"p2",next:"p4",
@@ -651,6 +668,7 @@ body:`<p>They're called <strong>open chords</strong> because they use open strin
 <h3>Minor chords <span class="hint">— darker, sadder sound</span></h3>
 <div class="row" id="cowboyMinors"></div>
 <p>Learn each new chord with the ${back("p4","one-minute challenge")}. It has pairs for G ↔ C, C ↔ D, D ↔ G and Am ↔ C.</p>
+<p>Want the rest? The seventh chords (A7, B7, C7, D7, E7, G7) are on the ${back("p2","chord chart in Lesson 3")}.</p>
 <p class="plain"><strong>F is the hardest chord here.</strong> This is the small, easier version: finger 1 lies flat across the two thinnest strings. Give it a few weeks — everyone struggles with F.</p>
 <h3>Four chords, a hundred songs</h3>
 <p>C – Am – F – G is one of the most-used chord patterns in pop music. One bar each, then repeat. <em>Stand By Me</em>, <em>Every Breath You Take</em> and <em>Earth Angel</em> are all built on this same pattern (just started from a different note).</p>
@@ -969,6 +987,12 @@ const CHORDS={
  Am:{name:"Am",grid:["x","0","2","2","1","0"],fingers:["","0","2","3","1","0"],how:["Finger 2: D string, fret 2","Finger 3: G string, fret 2","Finger 1: B string, fret 1","Don't play the low E string"],midi:[45,52,57,60,64],bass:45},
  Dm:{name:"Dm",grid:["x","x","0","2","3","1"],fingers:["","","0","2","3","1"],how:["Finger 2: G string, fret 2","Finger 3: B string, fret 3","Finger 1: high e string, fret 1","Strum only the 4 thinnest strings"],midi:[50,57,62,65],bass:38},
  F:{name:"F",grid:["x","x","3","2","1","1"],fingers:["","","3","2","1","1"],how:["Finger 3: D string, fret 3","Finger 2: G string, fret 2","Finger 1: lay it flat across the B and high e strings at fret 1","Strum only the 4 thinnest strings"],midi:[53,57,60,65],bass:41},
+ A7:{name:"A7",grid:["x","0","2","0","2","0"],fingers:["","0","2","0","3","0"],how:["Finger 2: D string, fret 2","Finger 3: B string, fret 2","Don't play the low E string"],midi:[45,52,55,61,64],bass:45},
+ B7:{name:"B7",grid:["x","2","1","2","0","2"],fingers:["","2","1","3","0","4"],how:["Finger 2: A string, fret 2","Finger 1: D string, fret 1","Finger 3: G string, fret 2","Finger 4: high e string, fret 2","Don't play the low E string"],midi:[47,51,57,59,66],bass:35},
+ C7:{name:"C7",grid:["x","3","2","3","1","0"],fingers:["","3","2","4","1","0"],how:["Start from C, then add finger 4: G string, fret 3","Finger 3: A string, fret 3","Finger 2: D string, fret 2","Finger 1: B string, fret 1","Don't play the low E string"],midi:[48,52,58,60,64],bass:48},
+ D7:{name:"D7",grid:["x","x","0","2","1","2"],fingers:["","","0","2","1","3"],how:["Finger 2: G string, fret 2","Finger 1: B string, fret 1","Finger 3: high e string, fret 2","Strum only the 4 thinnest strings"],midi:[50,57,60,66],bass:38},
+ E7:{name:"E7",grid:["0","2","0","1","0","0"],fingers:["0","2","0","1","0","0"],how:["Finger 2: A string, fret 2","Finger 1: G string, fret 1","Strum all six strings"],midi:[40,47,50,56,59,64],bass:40},
+ G7:{name:"G7",grid:["3","2","0","0","0","1"],fingers:["3","2","0","0","0","1"],how:["Finger 3: low E string, fret 3","Finger 2: A string, fret 2","Finger 1: high e string, fret 1","Strum all six strings"],midi:[43,47,50,55,59,65],bass:43},
  Asus2:{name:"Asus2",grid:["x","0","2","2","0","0"],fingers:["","0","2","3","0","0"],how:["Finger 2: D string, fret 2","Finger 3: G string, fret 2","Don't play the low E string"],midi:[45,52,57,59,64],bass:45}
 };
 function drawChord(ch){
@@ -997,6 +1021,34 @@ mount("twoChords",["Em","Asus2"]);
 mount("gCard",["G"]);
 mount("cowboyMajors",["C","A","G","E","D"]);
 mount("cowboyMinors",["Em","Am","Dm","F"]);
+
+// ---- Chord chart (Lesson 3) -------------------------------------------------
+// To add your own photo of a chord, put the picture in assets/img/chords/ and
+// list it here, e.g.  C:"assets/img/chords/C.jpg",  Am:"assets/img/chords/Am.jpg"
+const CHORD_PHOTOS={};
+const CHORD_GROUPS=[
+  ["Major chords","bright, happy sound",["C","A","G","E","D"]],
+  ["Minor chords","darker, sadder sound",["Am","Em","Dm"]],
+  ["Seventh chords","bluesy, wants to move on",["A7","B7","C7","D7","E7","G7"]],
+  ["The tricky one","the small, easier F",["F"]]
+];
+function chordTab(ch){return ch.grid.map((g,i)=>[...ch.grid].reverse()[i]).map((g,i)=>["e","B","G","D","A","E"][i]+"|-"+(g==="x"?"x":g).padEnd(2,"-")+"-").join("\n");}
+function chordLibrary(){
+  const wrap=document.getElementById("chordLib"); if(!wrap) return;
+  CHORD_GROUPS.forEach(([title,hint,keys])=>{
+    wrap.insertAdjacentHTML("beforeend",`<h3 class="ch-group">${title} <span class="hint">— ${hint}</span></h3>`);
+    keys.forEach(k=>{
+      const ch=CHORDS[k],card=document.createElement("div");card.className="card";
+      card.innerHTML=`<h4>${ch.name}</h4><div class="ch-top"><pre class="tab" aria-label="${ch.name} tab">${chordTab(ch)}</pre></div><ul>${ch.how.map(x=>`<li>${x}</li>`).join("")}</ul>`;
+      card.querySelector(".ch-top").prepend(drawChord(ch));
+      const photo=CHORD_PHOTOS[k];
+      card.insertAdjacentHTML("beforeend",photo?`<div class="ch-photo"><img src="${photo}" alt="Hand playing ${ch.name}" loading="lazy"></div>`:`<div class="ch-photo">Photo of ${ch.name} coming soon</div>`);
+      const b=document.createElement("button");b.className="primary";b.textContent="Hear "+ch.name;b.onclick=()=>{playChordRing(ch.midi);setNow(ch.name);};
+      card.appendChild(b);wrap.appendChild(card);
+    });
+  });
+}
+chordLibrary();
 
 const BEG=[{s:0,f:5,midi:45,l:"A"},{s:0,f:8,midi:48,l:"C"},{s:1,f:5,midi:50,l:"D"},{s:1,f:7,midi:52,l:"E"},{s:2,f:5,midi:55,l:"G"},{s:2,f:7,midi:57,l:"A"},{s:4,f:5,midi:64,l:"E"},{s:5,f:8,midi:72,l:"C"}];
 const PLY=[{s:0,f:5,midi:45,l:"A"},{s:0,f:8,midi:48,l:"C"},{s:1,f:5,midi:50,l:"D"},{s:1,f:7,midi:52,l:"E"},{s:4,f:8,midi:67,l:"G"},{s:4,f:5,midi:64,l:"E"},{s:5,f:5,midi:69,l:"A"},{s:5,f:8,midi:72,l:"C"}];
