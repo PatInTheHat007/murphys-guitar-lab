@@ -101,6 +101,31 @@ dl.words dd{margin:.1rem 0 0;color:var(--muted)}
 .lab .more{display:contents}
 .lab .more-btn{display:none}
 :focus-visible{outline:2px solid var(--accent-text);outline-offset:2px}
+/* Warm-up review box at the top of each lesson */
+.warmup{display:flex;gap:.9rem;align-items:baseline;background:var(--surface-2);border:1px dashed var(--border);border-radius:14px;padding:.7rem 1rem;margin:1rem 0}
+.warmup .tag{flex:none;font:650 .7rem Outfit,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-text)}
+/* Inline links read in rust-on-ink, not the browser's default blue. */
+.page a:not(.btn-link){color:var(--accent-text)}
+/* Record-yourself card */
+.rec .dot{display:inline-block;width:.6rem;height:.6rem;border-radius:50%;background:#fff;margin-right:.25rem;vertical-align:.05rem}
+.rec.on .dot{animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.2}}
+.rec audio{width:100%;margin-top:.4rem}
+/* Chord-pair picker and 7-day history for the one-minute challenge */
+.pairs button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:.3rem;margin:.7rem 0 .2rem}
+.week div{background:var(--surface-2);border:1px solid var(--border);border-radius:10px;text-align:center;padding:.3rem 0;font-size:.72rem;color:var(--muted)}
+.week div b{display:block;font:700 1rem Fraunces,serif;color:var(--text)}
+.week div.today{border-color:var(--accent-text)}
+/* Help pages */
+.qa{display:grid;gap:.6rem;margin:1rem 0}
+.qa .card h3{font-size:1.05rem}
+.qa .card p{margin:.3rem 0}
+.checklist{list-style:none;padding:0}
+.checklist li{position:relative;padding-left:1.8rem;margin:.5rem 0}
+.checklist li::before{content:"✓";position:absolute;left:0;top:0;color:var(--good);font-weight:700}
+a.btn-link{display:inline-block;background:var(--accent);color:#fff;text-decoration:none;font:650 .86rem Outfit,sans-serif;border-radius:999px;padding:.6rem 1.1rem}
+a.btn-link:hover{background:var(--accent-hover)}
 @media(max-width:900px){
   :root{--side:0px}
   .app{grid-template-columns:1fr}
@@ -146,7 +171,10 @@ dl.words dd{margin:.1rem 0 0;color:var(--muted)}
 <section class="page" id="p8"></section>
 <section class="page" id="p9"></section>
 <section class="page" id="p10"></section>
+<section class="page" id="pG"></section>
 <section class="page" id="pX"></section>
+<section class="page" id="pN"></section>
+<section class="page" id="pE"></section>
 <section class="page" id="pW"></section>
 </div>
 </div>
@@ -168,7 +196,8 @@ dl.words dd{margin:.1rem 0 0;color:var(--muted)}
   <span class="now" id="now">Slow 60</span>
 </div>
 <script>
-const PAGES=[["p0","Welcome"],["p1","1 · Meet your guitar"],["pH","2 · Holding it"],["p2","3 · Reading tab"],["p3","4 · First chord: Em"],["p4","5 · Changing chords"],["p5","6 · Your first song"],["pS","7 · Strumming up and down"],["p6","8 · First notes"],["p7","9 · The five-note scale"],["p8","10 · Ending on a home note"],["p9","11 · More chords"],["p10","12 · Jam room"],["pX","Extra credit"],["pW","Word list"]];
+const PAGES=[["p0","Welcome"],["p1","1 · Meet your guitar"],["pH","2 · Holding it"],["p2","3 · Reading tab"],["p3","4 · First chord: Em"],["p4","5 · Changing chords"],["p5","6 · Your first song"],["pS","7 · Strumming up and down"],["p6","8 · First notes"],["p7","9 · The five-note scale"],["p8","10 · Ending on a home note"],["p9","11 · More chords"],["p10","12 · Jam room"],["pG","Finished? Next: Level 2"],["pX","Extra credit"],["pN","What's normal"],["pE","Gear and setup"],["pW","Word list"]];
+const NAV_SEPS={pG:"When you finish",pN:"Help"};
 
 // Progress ticks are a per-browser convenience; the page works without storage.
 function loadDone(){try{return new Set(JSON.parse(localStorage.getItem("mgl-done")||"[]"));}catch(e){return new Set();}}
@@ -176,8 +205,8 @@ function saveDone(set){try{localStorage.setItem("mgl-done",JSON.stringify([...se
 let DONE=loadDone();
 function markNav(){document.querySelectorAll("aside button.nav").forEach(b=>b.classList.toggle("done",DONE.has(b.dataset.id)));}
 
-function show(id){stopAll(false);stopTuner();try{localStorage.setItem("mgl-last",id);}catch(e){}document.querySelectorAll(".page").forEach(p=>p.classList.toggle("on",p.id===id));document.querySelectorAll("aside button.nav").forEach(b=>b.classList.toggle("on",b.dataset.id===id));window.scrollTo(0,0);}
-document.getElementById("nav").innerHTML=PAGES.map(([id,l],i)=>(id==="pX"?`<div class="nav-sep">When you're ready</div>`:"")+`<button class="nav ${i===0?"on":""}" data-id="${id}" onclick="show('${id}')">${l}</button>`).join("");
+function show(id){stopAll(false);stopTuner();stopRec();try{localStorage.setItem("mgl-last",id);}catch(e){}try{history.replaceState(null,"","#"+id);}catch(e){}document.querySelectorAll(".page").forEach(p=>p.classList.toggle("on",p.id===id));document.querySelectorAll("aside button.nav").forEach(b=>b.classList.toggle("on",b.dataset.id===id));window.scrollTo(0,0);}
+document.getElementById("nav").innerHTML=PAGES.map(([id,l],i)=>(NAV_SEPS[id]?`<div class="nav-sep">${NAV_SEPS[id]}</div>`:"")+`<button class="nav ${i===0?"on":""}" data-id="${id}" onclick="show('${id}')">${l}</button>`).join("");
 
 function pager(a,b){return `<div class="pager">${a?`<button onclick="show('${a}')">← Back</button>`:""}${b?`<button class="primary" onclick="show('${b}')">Next →</button>`:""}</div><p class="card-foot">Every day, 10 minutes: 2 min changing chords · 3 min the scale · 2 min strumming with a chart · 3 min playing a song.</p>`}
 function patHero(pose,line,title,body,pid,pocket){
@@ -188,11 +217,39 @@ function patHero(pose,line,title,body,pid,pocket){
 }
 function lesson(o){
   return patHero(o.pose||"teach",(o.bubble||"Click me for a tip")+" →",o.eyebrow,`<h2>${o.title}</h2>${o.intro?`<p>${o.intro}</p>`:""}`,"pk"+o.id,o.tip)+
+  (WARMUP[o.id]?`<div class="warmup"><span class="tag">2-min warm-up</span><div>${WARMUP[o.id]}</div></div>`:"")+
   (o.learn?`<div class="learn"><strong>In this lesson you'll learn</strong><ul>${o.learn.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:"")+
   o.body+
+  (REC[o.id]?recHTML(o.id,REC[o.id]):"")+
   (o.goal?`<label class="done-box"><input type="checkbox" data-done="${o.id}"/><span><strong>Tick this when:</strong> ${o.goal}</span></label>`:"")+
   pager(o.prev,o.next);
 }
+// Start each lesson by reviewing an earlier one, so old skills don't fade.
+function back(id,label){return `<a href="#${id}" onclick="show('${id}');return false">${label}</a>`;}
+const WARMUP={
+  pH:`Tune up with the ${back("p1","tuner in Lesson 1")}. Say each string name out loud as you play it.`,
+  p2:`Sit the way you learned in ${back("pH","Lesson 2")} and strum the open strings slowly for a minute. Keep your wrist loose.`,
+  p3:`Play the B-string walk from ${back("p2","Lesson 3")} along with the sound.`,
+  p4:`Make Em (${back("p3","Lesson 4")}), strum it, then lift your fingers off and put them back. Do that 10 times.`,
+  p5:`Do the one-minute challenge from ${back("p4","Lesson 5")} with Em ↔ G. Try to beat your best.`,
+  pS:`Play your first song from ${back("p5","Lesson 6")} once, all the way through, on Slow 60.`,
+  p6:`Strum Em – G for a minute with the all-downs pattern from ${back("pS","Lesson 7")}.`,
+  p7:`Play the four notes from ${back("p6","Lesson 8")} with the sound on, then once without it.`,
+  p8:`Play the five-note scale from ${back("p7","Lesson 9")} up and down once on Slow 60.`,
+  p9:`Do the one-minute challenge from ${back("p4","Lesson 5")} with Em ↔ G. Try to beat your best.`,
+  p10:`Do the one-minute challenge from ${back("p4","Lesson 5")} with your newest pair, like G ↔ C or C ↔ D.`
+};
+// Lessons where hearing yourself back helps most.
+const REC={
+  p3:"Pick each string of Em one at a time, then play it back. Listen for buzzing or dead strings.",
+  p5:"Record your first song from start to finish. Don't stop for mistakes. Just keep going.",
+  pS:"Record 30 seconds of strumming with the metronome on. Do your strums land on the clicks?",
+  p8:"Record yourself playing the scale over the band. Do your endings sound finished?",
+  p10:"Record one full run with a band. Keep it, then record again in a month and compare. You'll hear the difference."
+};
+function recHTML(id,prompt){return `<div class="card rec" id="rec-${id}"><p class="eyebrow">Record yourself</p><p>${prompt}</p>
+<div class="row"><button class="primary" data-rec onclick="toggleRec('${id}')"><span class="dot"></span>Record</button><span class="hint" data-rec-msg>The recording stays on this device. Nothing is uploaded.</span></div>
+<audio controls hidden></audio></div>`;}
 function chartHTML(names,id){
   const n=names.length;
   return `<div class="chart" ${id?`id="${id}"`:""} data-bars="${n}" style="--n:${n}">${names.map((nm,b)=>`<div class="bar"><h4>${nm}</h4><div class="slashes">${[0,1,2,3].map(k=>`<div class="slash" data-i="${b*4+k}"><b>↓</b>${k+1}</div>`).join("")}</div></div>`).join("")}</div>
@@ -244,19 +301,21 @@ E|--0--`;
 const BOX_GHOST=[{s:0,f:5,lab:"A",root:1},{s:0,f:8,lab:"C"},{s:1,f:5,lab:"D"},{s:1,f:7,lab:"E"},{s:2,f:5,lab:"G"},{s:2,f:7,lab:"A",root:1},{s:3,f:5,lab:"C"},{s:3,f:7,lab:"D"},{s:4,f:5,lab:"E"},{s:4,f:8,lab:"G"},{s:5,f:5,lab:"A",root:1},{s:5,f:8,lab:"C"}];
 
 document.getElementById("p0").innerHTML=patHero("wave","Hi, I'm Pat. Click me any time for a tip →","Welcome",
-`<h1>Let's-a fret.</h1><p>This lab takes you from "I just got a guitar" to playing along with a band — one small step per lesson.</p>`,"pk0",
+`<h1>Let's-a fret.</h1><p>This lab takes you from "I just got a guitar" to playing along with a band — one small step per lesson. These 12 lessons are Level 1 of the <a href="course.html" style="color:var(--accent-text)">full course</a>. When you finish, you go on to Level 2.</p>`,"pk0",
 `nobody sounds good in week one. Ten minutes every day beats an hour on Sunday.`)+
 `<h3>How to use the lab</h3>
 <ol class="steps">
-<li><strong>Go in order.</strong> The lessons are on the left. Each one builds on the last.</li>
+<li><strong>Go in order.</strong> The lessons are on the left. Each one builds on the last, and starts with a 2-minute warm-up from an earlier lesson.</li>
 <li><strong>Turn your sound on.</strong> Gold and green buttons play sound so you can hear what it should sound like.</li>
 <li><strong>Use the bar at the bottom</strong> to set the speed and turn on a metronome (a steady click to play along with). Always start on <strong>Slow</strong>.</li>
 <li><strong>Tick the green box</strong> at the end of a lesson when you can do it. A ✓ appears in the menu.</li>
+<li><strong>Hear yourself.</strong> Some lessons have a <strong>Record yourself</strong> button. Listening back shows you things you can't hear while you play.</li>
 <li><strong>Stuck on a word?</strong> Check the <a href="#" onclick="show('pW');return false" style="color:var(--accent-text)">Word list</a>.</li>
 </ol>
 <div class="card"><p class="eyebrow">Your 10 minutes a day</p>
 <p><strong>2 min</strong> changing chords · <strong>3 min</strong> the scale · <strong>2 min</strong> strumming with a chart · <strong>3 min</strong> playing a song. Same plan every day — just slot in whatever lesson you're on.</p></div>
-<p class="hint">You'll need a guitar (acoustic or electric) that's in tune. A free tuner app on your phone is the easiest way.</p>
+<div class="plain"><strong>Before you start:</strong> read ${back("pN","What's normal")}. It takes two minutes. Sore fingertips, buzzing strings and slow chord changes happen to everyone, and they don't mean you're bad at this.</div>
+<p class="hint">You'll need a guitar (acoustic or electric). Lesson 1 has a tuner built in. Still choosing a guitar? See ${back("pE","Gear and setup")}.</p>
 <div class="row"><button class="primary" onclick="show('p1')">Start lesson 1 →</button><a class="hint" href="index.html">← Back to the home page</a></div>`;
 
 document.getElementById("p1").innerHTML=lesson({id:"p1",eyebrow:"Lesson 1",title:"Meet your guitar",prev:"p0",next:"pH",
@@ -384,17 +443,20 @@ body:`<h3>Warm-up: Em → Asus2</h3>
 <p>G uses three fingers and a little stretch. Together with Em, it's enough to play a real song.</p>
 <div class="row" id="gCard"></div>
 <h3>The one-minute challenge</h3>
-<p>The best exercise there is for beginners. Switch between <strong>Em and G</strong> as many times as you can in one minute. Only count a change when all the strings ring.</p>
+<p>The best exercise there is for beginners. Switch between two chords as many times as you can in one minute. Only count a change when all the strings ring. Start with <strong>Em and G</strong>. When you learn new chords in Lesson 11, come back and pick a new pair.</p>
 <ol class="steps">
 <li>Press <strong>Start the minute</strong>. After 4 clicks, the timer starts.</li>
 <li>Every time you land a clean chord, press <strong>+1</strong> (or tap the space bar).</li>
-<li>Tomorrow, try to beat today's number.</li>
+<li>Tomorrow, try to beat today's number. Your best score for each day is saved below.</li>
 </ol>
 <div class="card">
+  <p class="hint center" style="margin:0">Pick a pair</p>
+  <div class="row center pairs" id="pairs" role="group" aria-label="Chord pair"></div>
   <div class="big-count" id="changeCount">0</div>
   <p class="hint center" id="drillMsg">clean changes</p>
   <div class="row center"><button class="primary" onclick="startChanges()">Start the minute</button><button class="good" onclick="addChange()">+1 clean change</button></div>
   <p class="hint center" id="bestScore"></p>
+  <div class="week" id="week" aria-label="Your best score each day this week"></div>
 </div>`,
 goal:"you can make 15 clean changes in one minute. That's fast enough for your first song."});
 
@@ -520,6 +582,7 @@ body:`<p>They're called <strong>open chords</strong> because they use open strin
 <div class="row" id="cowboyMajors"></div>
 <h3>Minor chords <span class="hint">— darker, sadder sound</span></h3>
 <div class="row" id="cowboyMinors"></div>
+<p>Learn each new chord with the ${back("p4","one-minute challenge")}. It has pairs for G ↔ C, C ↔ D, D ↔ G and Am ↔ C.</p>
 <p class="plain"><strong>F is the hardest chord here.</strong> This is the small, easier version: finger 1 lies flat across the two thinnest strings. Give it a few weeks — everyone struggles with F.</p>
 <h3>Four chords, a hundred songs</h3>
 <p>C – Am – F – G is one of the most-used chord patterns in pop music. One bar each, then repeat. <em>Stand By Me</em>, <em>Every Breath You Take</em> and <em>Earth Angel</em> are all built on this same pattern (just started from a different note).</p>
@@ -527,7 +590,7 @@ ${chartHTML(["C","Am","F","G"])}
 <button class="good" onclick="startBand('C Am F G')">▶ Play C – Am – F – G</button>`,
 goal:"you can play C – Am – F – G with the band, even if F is a bit messy."});
 
-document.getElementById("p10").innerHTML=lesson({id:"p10",pose:"wave",eyebrow:"Lesson 12",title:"Jam room",prev:"p9",next:"pX",
+document.getElementById("p10").innerHTML=lesson({id:"p10",pose:"wave",eyebrow:"Lesson 12",title:"Jam room",prev:"p9",next:"pG",
 bubble:"You're playing guitar now",
 intro:"Pick a band. The left card shows the chord to play now. The right card shows what's coming next, so you can get ready.",
 tip:`try the five-note scale from lesson 9 over any of these bands — it fits all three. G – C – D is the famous "three-chord trick": <em>La Bamba</em> and <em>Twist and Shout</em> use the same idea in other keys.`,
@@ -542,6 +605,77 @@ ${chartHTML(["Em","G","Em","G"],"jamChart")}
   <div class="card" id="jamNext"><p class="eyebrow">Coming next</p><h3>—</h3><div class="dia"></div></div>
 </div>`,
 goal:"you played along with a band. That's playing guitar!"});
+
+document.getElementById("pG").innerHTML=patHero("wave","You did it →","Level 1 done",
+`<h2>You finished the app. Next stop: Level 2.</h2><p>These 12 lessons are Level 1 of the full course. Level 2 is <strong>rock, blues and fingerpicking</strong>: power chords, the 12-bar blues, bends and your first fingerpicking patterns.</p>`,"pkG",
+`don't rush this checklist. Most people spend about two months on Level 1. Moving on before you're ready makes Level 2 feel much harder than it is.`)+
+`<h3>Before you move on, can you…</h3>
+<ul class="checklist">
+<li>Play the nine open chords from ${back("p9","Lesson 11")} from memory?</li>
+<li>Change between any two of them in time at 75 BPM? (Use the ${back("p4","one-minute challenge")} and the speed bar.)</li>
+<li>Play three complete songs with a steady strum?</li>
+<li>Play the ${back("p7","five-note scale")} up and down from memory?</li>
+</ul>
+<div class="plain"><strong>Not there yet?</strong> That's normal. Keep doing the 10-minute plan with lessons 5, 7 and 11 until you can do all four, then come back here.</div>
+<div class="row" style="margin-top:1.2rem"><a class="btn-link" href="course.html#level-2">Start Level 2 →</a><a class="hint" href="#pX" onclick="show('pX');return false">Or try the optional Extra credit first</a></div>`+pager("p10","pX");
+
+document.getElementById("pN").innerHTML=patHero("teach","Read this when it gets hard →","Help",
+`<h2>What's normal when you're learning</h2><p>Almost everyone who quits guitar quits in the first few weeks, usually because of one of the things below. They happen to everyone, and they all get better.</p>`,"pkN",
+`if you only remember one thing: little and often. Three 5-minute sessions are better for your fingers and your memory than one long one.`)+
+`<div class="qa">
+<div class="card"><h3>My fingertips hurt</h3><p>Normal for the first two to four weeks. Your fingertips are building calluses (harder skin). Play little and often, and stop for the day when it starts to sting. Once the calluses form, it stops hurting. Electric and nylon-string guitars are gentler while that happens.</p></div>
+<div class="card"><h3>Strings buzz or sound dead</h3><p>Everyone gets this for weeks. Press just behind the fret (the metal bar), not in the middle of the gap. Play on the very tip of your finger and arch your knuckles so you don't touch the next string. If it still buzzes everywhere, your guitar may need a setup. See ${back("pE","Gear and setup")}.</p></div>
+<div class="card"><h3>My chord changes are slow</h3><p>In week one, a change can take three or four seconds, and that's fine. Speed comes from repetition, not effort. Do the ${back("p4","one-minute challenge")} every day and watch your number climb. Slow down until you can keep going without stopping, then speed up.</p></div>
+<div class="card"><h3>My hand aches or cramps</h3><p>You're probably squeezing too hard. Press only as hard as you need to make the note ring. Try pressing lighter and lighter until it buzzes, then add a tiny bit more. Shake your hand out between tries. If you feel sharp pain, or pain in your wrist or arm that doesn't go away after rest, stop and rest for a few days. If it keeps happening, see a doctor.</p></div>
+<div class="card"><h3>I can't play F</h3><p>Almost nobody can at first. It often takes weeks, sometimes months. Keep practising it for a minute a day and use songs without F in the meantime.</p></div>
+<div class="card"><h3>I sound bad when I record myself</h3><p>Everyone hates their first recordings. That's what makes them useful: you hear what to fix. Keep them, and in a month you'll hear how far you've come.</p></div>
+<div class="card"><h3>I'm not getting better</h3><p>Progress comes in jumps, not a smooth line. You can feel stuck for a week and then it suddenly clicks. Your daily chord-change scores and your old recordings are the proof that you're improving.</p></div>
+<div class="card"><h3>I forget things between days</h3><p>Your brain sorts out new movements while you sleep. That's why the same short session every day works better than a long one once a week. It's also why every lesson starts with a warm-up from an earlier one.</p></div>
+<div class="card"><h3>My guitar keeps going out of tune</h3><p>New strings stretch for the first week or so and keep going flat. Changes in temperature do it too. Tune up every time you pick up the guitar. It only takes a minute with the ${back("p1","tuner")}.</p></div>
+</div>`+pager("pX","pE");
+
+document.getElementById("pE").innerHTML=patHero("teach","Click me for a money-saving tip →","Help",
+`<h2>Gear and setup</h2><p>You don't need much to start. Here's what matters and what doesn't.</p>`,"pkE",
+`a cheap guitar with a good setup plays better than an expensive guitar with a bad one. If you only spend money on one thing, spend it on a setup.`)+
+`<h3>What you need</h3>
+<ul class="checklist">
+<li><strong>A guitar.</strong> Acoustic, electric or nylon-string all work for these lessons.</li>
+<li><strong>A tuner.</strong> There's one built into ${back("p1","Lesson 1")}. A clip-on tuner is handy too.</li>
+<li><strong>A few picks.</strong> Thin to medium ones are easiest for strumming. They're cheap, so try a few.</li>
+<li><strong>For electric guitar:</strong> a small amp or a pair of headphones with a headphone amp, and a cable.</li>
+</ul>
+<p class="hint">Nice to have later: a strap, a capo, a stand so the guitar is out where you'll see it and pick it up.</p>
+
+<h3>Acoustic, electric or nylon?</h3>
+<div class="qa">
+<div class="card"><h3>Electric</h3><p>Thin strings that sit close to the neck, so it's the easiest on your fingers. Needs an amp or headphones. Great for rock, blues and pop.</p></div>
+<div class="card"><h3>Acoustic (steel strings)</h3><p>Just pick it up and play, no amp. Harder on your fingers for the first few weeks. Great for strumming songs and singing along.</p></div>
+<div class="card"><h3>Nylon-string (classical)</h3><p>The softest strings, so the gentlest on your fingers. The neck is wider and the sound is warmer. Great for classical, folk and fingerpicking, and good for kids.</p></div>
+</div>
+<p><strong>The best choice is the one that sounds like the music you want to play.</strong> You'll practise more if you love the sound.</p>
+
+<h3>Get a setup</h3>
+<p>A <strong>setup</strong> is when a guitar shop adjusts your guitar so it's easy to play. They lower the strings closer to the neck, fix buzzes and make sure it stays in tune up the neck. Most guitars, new or used, play much better after one, and it doesn't cost much compared to the guitar itself.</p>
+<p>Your guitar probably needs one if:</p>
+<ul>
+<li>Pressing a string near the middle of the neck hurts much more than near the tuning pegs.</li>
+<li>It's in tune when you play open strings, but chords further up the neck sound off.</li>
+<li>Strings buzz on lots of frets even when you press cleanly.</li>
+</ul>
+
+<h3>Buying on a budget</h3>
+<ul>
+<li>Skip toy guitars and the very cheapest no-name models. They're often so hard to play that people give up.</li>
+<li>A beginner model from a well-known brand, or a used guitar checked by a shop, is a good start.</li>
+<li>Try before you buy if you can, and ask the shop to set it up for you.</li>
+<li>For younger kids, a smaller ¾ or ½ size guitar is easier to hold.</li>
+</ul>
+
+<h3>Strings</h3>
+<p>Change them every few months, or sooner if they look dull or rusty, feel rough, or won't stay in tune. On acoustic, ask for <strong>light</strong> strings. They're easier to press.</p>
+
+<h3>Left-handed?</h3>
+<p>Try holding a guitar both ways. Many left-handed people play the normal way, because both hands work hard on guitar. If it feels backwards, get a <strong>left-handed guitar</strong>. Everything in these lessons still works. Tab and the sounds stay the same. Just flip the chord pictures left to right in your head, so the thick string is on the right.</p>`+pager("pN","pW");
 
 document.getElementById("pX").innerHTML=patHero("teach","Optional — no rush →","Extra credit",
 `<h2>When you're ready for more</h2><p>None of this is needed to play songs. Come back once lessons 1–12 feel comfortable.</p>`,"pkX",
@@ -588,7 +722,7 @@ ${pair("nkB",`B|-1-3-5-6-8-10-12-13-`)}
 <p>Slide the scale shape from lesson 9 down to the open strings and it becomes <strong>E minor pentatonic</strong>: E G A B D. Those notes all belong to the key of G, so this shape fits the G – C – D – G band. The darker dots are G.</p>
 <div class="pair"><div class="neck-wrap" id="nkEpent"></div><pre class="tab" id="nkEpentTab"></pre></div>
 <div class="row"><button class="primary" onclick="playEpent()">Hear the shape</button><button class="good" onclick="startBand('G C D G')">▶ Play it over G – C – D – G</button></div>
-</details>`+pager("p10","pW");
+</details>`+pager("pG","pN");
 
 document.getElementById("pW").innerHTML=`<p class="eyebrow">Word list</p><h2>Guitar words, in plain English</h2>
 <dl class="words">
@@ -611,7 +745,7 @@ document.getElementById("pW").innerHTML=`<p class="eyebrow">Word list</p><h2>Gui
 <dt>Scale</dt><dd>A set of notes that sound good together.</dd>
 <dt>Strum</dt><dd>Brushing across several strings at once. A downstroke goes from the thick strings toward the thin ones.</dd>
 <dt>Tab</dt><dd>Guitar music written as six lines (strings) with numbers (frets). Thin string on top.</dd>
-</dl>`+pager("pX",null);
+</dl>`+pager("pE",null);
 
 // Done boxes: tick to mark a lesson done in the menu.
 document.querySelectorAll("input[data-done]").forEach(cb=>{cb.checked=DONE.has(cb.dataset.done);cb.addEventListener("change",()=>{cb.checked?DONE.add(cb.dataset.done):DONE.delete(cb.dataset.done);saveDone(DONE);markNav();});});
@@ -743,15 +877,32 @@ function startCross(kind){countIn(()=>{let i=0;(function step(){const beat=i%8,a
 if(kind!=="free"){const seq=kind==="beginner"?BEG:PLY;playHeld(seq[beat].midi,bpmMs());["nkPent","nkBox"].forEach(n=>necks[n]?.light(seq[beat].s,seq[beat].f,seq[(beat+1)%8]));setNow((am?"Am":"C")+" · play "+seq[beat].l);}else setNow(am?"Am":"C");
 i++;progTimer=setTimeout(step,bpmMs());})();});}
 
-function loadBest(){try{return +localStorage.getItem("mgl-best-changes")||0;}catch(e){return 0;}}
-function showBest(){const b=loadBest();document.getElementById("bestScore").textContent=b?`Your best so far: ${b}`:"";}
+// The one-minute challenge works on any chord pair. Em–G keeps the original
+// storage key so earlier best scores still show up.
+const PAIRS=[["Em","G"],["G","C"],["C","D"],["D","G"],["Am","C"]];
+let pairIx=0;try{pairIx=Math.min(PAIRS.length-1,Math.max(0,+localStorage.getItem("mgl-pair")||0));}catch(e){}
+function pairName(i=pairIx){return PAIRS[i].join(" ↔ ");}
+function bestKey(i=pairIx){return i===0?"mgl-best-changes":"mgl-best-changes:"+PAIRS[i].join("-");}
+function dayKey(d=new Date()){return d.toLocaleDateString("en-CA");}
+function loadLog(){try{return JSON.parse(localStorage.getItem("mgl-change-log")||"{}")||{};}catch(e){return {};}}
+function logScore(n){const log=loadLog(),k=dayKey(),p=PAIRS[pairIx].join("-");log[k]=log[k]||{};if(n>(log[k][p]||0))log[k][p]=n;
+  const keep=Object.keys(log).sort().slice(-60);try{localStorage.setItem("mgl-change-log",JSON.stringify(Object.fromEntries(keep.map(d=>[d,log[d]]))));}catch(e){}}
+function showWeek(){const el=document.getElementById("week");if(!el)return;const log=loadLog(),p=PAIRS[pairIx].join("-"),out=[];
+  for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);const v=(log[dayKey(d)]||{})[p];
+    out.push(`<div class="${i===0?"today":""}"><b>${v||"–"}</b>${i===0?"Today":d.toLocaleDateString(undefined,{weekday:"short"})}</div>`);}
+  el.innerHTML=out.join("");}
+function setPair(i){if(drillOn)return;pairIx=i;try{localStorage.setItem("mgl-pair",i);}catch(e){}paintPairs();showBest();showWeek();
+  changeCount=0;document.getElementById("changeCount").textContent="0";document.getElementById("drillMsg").textContent="clean changes";}
+function paintPairs(){const el=document.getElementById("pairs");if(el)el.innerHTML=PAIRS.map((p,i)=>`<button aria-pressed="${i===pairIx}" onclick="setPair(${i})">${pairName(i)}</button>`).join("");}
+function loadBest(){try{return +localStorage.getItem(bestKey())||0;}catch(e){return 0;}}
+function showBest(){const b=loadBest();document.getElementById("bestScore").textContent=b?`Your best for ${pairName()}: ${b}`:"";}
 function addChange(){if(!drillOn)return;changeCount++;document.getElementById("changeCount").textContent=changeCount;}
-function startChanges(){changeCount=0;document.getElementById("changeCount").textContent="0";document.getElementById("drillMsg").textContent="get ready… start on Em";
-countIn(()=>{let t=60;drillOn=true;document.getElementById("countVis").textContent="";document.getElementById("drillMsg").textContent="Go! Em ↔ G — press +1 (or space) for each clean change";setNow("60 seconds left");
-changeTimer=setInterval(()=>{t--;setNow(t+" seconds left");if(t<=0){const n=changeCount;stopAll(false);clickMetro();const best=loadBest();if(n>best){try{localStorage.setItem("mgl-best-changes",n);}catch(e){}}
+function startChanges(){changeCount=0;document.getElementById("changeCount").textContent="0";document.getElementById("drillMsg").textContent="get ready… start on "+PAIRS[pairIx][0];
+countIn(()=>{let t=60;drillOn=true;document.getElementById("countVis").textContent="";document.getElementById("drillMsg").textContent="Go! "+pairName()+" — press +1 (or space) for each clean change";setNow("60 seconds left");
+changeTimer=setInterval(()=>{t--;setNow(t+" seconds left");if(t<=0){const n=changeCount;stopAll(false);clickMetro();const best=loadBest();if(n>best){try{localStorage.setItem(bestKey(),n);}catch(e){}}logScore(n);showWeek();
 document.getElementById("drillMsg").textContent=n>best&&best?`Time! New best: ${n} clean changes 🎉`:`Time! ${n} clean changes`;setNow("minute done");showBest();}},1000);});}
 document.addEventListener("keydown",e=>{if(drillOn&&e.code==="Space"){e.preventDefault();addChange();}});
-showBest();
+paintPairs();showBest();showWeek();
 
 function toggleMetro(){metroOn=!metroOn;document.getElementById("metroBtn").textContent=metroOn?"Metronome: on":"Metronome";if(metroTimer)clearInterval(metroTimer);if(metroOn){ctx();clickMetro();metroTimer=setInterval(clickMetro,bpmMs());}}
 function toggleDrone(){const a=ctx();if(droneOn){droneOsc.stop();droneOn=false;return;}droneOsc=a.createOscillator();const g=a.createGain();droneOsc.frequency.value=midiToFreq(48);g.gain.value=.04;droneOsc.connect(g);g.connect(a.destination);droneOsc.start();droneOn=true;}
@@ -804,7 +955,7 @@ function tunerFrame(){
     document.getElementById("tunerMsg").textContent=ok?"In tune ✓":Math.abs(cents)>50?(cents<0?"Way too low — tighten the string":"Way too high — loosen the string"):(cents<0?"A bit low — tighten slowly":"A bit high — loosen slowly");
   }
 }
-async function toggleTuner(){
+async function toggleTuner(){stopRec();
   if(tuner){stopTuner();return;}
   const msg=document.getElementById("tunerMsg");
   try{
@@ -817,10 +968,34 @@ async function toggleTuner(){
 }
 function stopTuner(){if(!tuner)return;clearInterval(tuner.timer);tuner.stream.getTracks().forEach(t=>t.stop());tuner=null;
   document.getElementById("tunerBtn").textContent="Start tuner";document.getElementById("tunerMsg").textContent="Tuner off.";}
+// Record yourself: uses the microphone, keeps the take in memory only.
+let rec=null;
+function recMsg(id,t){const el=document.querySelector("#rec-"+id+" [data-rec-msg]");if(el)el.textContent=t;}
+function recBtn(id,label){const b=document.querySelector("#rec-"+id+" [data-rec]");if(b)b.innerHTML='<span class="dot"></span>'+label;}
+async function toggleRec(id){
+  if(rec){const was=rec.id;stopRec();if(was===id)return;}
+  if(!navigator.mediaDevices?.getUserMedia||!window.MediaRecorder){recMsg(id,"This browser can't record. Your phone's voice memo app works just as well.");return;}
+  stopAll(false);stopTuner();
+  let stream;
+  try{stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false}});}
+  catch(e){recMsg(id,"The microphone is blocked. Allow it in your browser's address bar, or use your phone's voice memo app.");return;}
+  const card=document.getElementById("rec-"+id),mr=new MediaRecorder(stream),chunks=[],t0=Date.now();
+  mr.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};
+  mr.onstop=()=>{stream.getTracks().forEach(t=>t.stop());card.classList.remove("on");recBtn(id,"Record again");
+    const a=card.querySelector("audio");if(a.src)URL.revokeObjectURL(a.src);a.src=URL.createObjectURL(new Blob(chunks,{type:mr.mimeType||"audio/webm"}));a.hidden=false;
+    recMsg(id,"Press play and listen. What's the one thing you'd fix first?");};
+  rec={id,mr,timer:setInterval(()=>{const s=Math.floor((Date.now()-t0)/1000);recMsg(id,`Recording… ${s}s. Press Stop when you're done.`);if(s>=300)stopRec();},500)};
+  mr.start();card.classList.add("on");recBtn(id,"Stop");recMsg(id,"Recording…");
+}
+function stopRec(){if(!rec)return;clearInterval(rec.timer);try{rec.mr.stop();}catch(e){}rec=null;}
+
 function goTuner(){show("p1");document.getElementById("tunerCard").scrollIntoView({block:"center"});}
 
 // Pick up where you left off.
-(function(){let last=null;try{last=localStorage.getItem("mgl-last");}catch(e){}if(last&&last!=="p0"&&PAGES.some(p=>p[0]===last))show(last);})();
+// Open the page named in the address (lessons.html#p4), otherwise pick up where you left off.
+function pageFromHash(){const h=location.hash.slice(1);return PAGES.some(p=>p[0]===h)?h:null;}
+(function(){let last=null;try{last=localStorage.getItem("mgl-last");}catch(e){}const want=pageFromHash()||(last&&last!=="p0"&&PAGES.some(p=>p[0]===last)?last:null);if(want)show(want);})();
+window.addEventListener("hashchange",()=>{const h=pageFromHash();if(h&&!document.getElementById(h).classList.contains("on"))show(h);});
 </script>
 </body>
 </html>
